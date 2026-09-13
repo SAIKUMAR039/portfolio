@@ -1,544 +1,331 @@
 "use client";
 
-import React, { useEffect, useState, useMemo, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { motion } from "framer-motion";
-import { ChevronDown, Terminal as TerminalIcon } from "lucide-react";
+import { ArrowRight, ChevronDown, Sparkles, Terminal, Code2, Cpu, Zap, Layers, CheckCircle2 } from "lucide-react";
+import Link from "next/link";
 import { usePortfolio } from "@/context/portfolio-context";
 
-interface CharToken {
-  char: string;
-  colorClass: string;
-}
-
-interface HistoryItem {
-  text: string;
-  colorClass: string;
-}
-
 export const HeroSection: React.FC = () => {
-  const { portfolioData, loading } = usePortfolio();
-  const [currentIndex, setCurrentIndex] = useState(0);
-  const [introFinished, setIntroFinished] = useState(false);
-  const [history, setHistory] = useState<HistoryItem[]>([]);
-  const [inputValue, setInputValue] = useState("");
-  const [matrixActive, setMatrixActive] = useState(false);
-
-  const inputRef = useRef<HTMLInputElement>(null);
+  const { portfolioData } = usePortfolio();
   const canvasRef = useRef<HTMLCanvasElement>(null);
-  const terminalBodyRef = useRef<HTMLDivElement>(null);
+  const profile = portfolioData?.profile;
+  const [activeTab, setActiveTab] = useState<"architecture" | "stack" | "metrics">("architecture");
 
-  const cyan = "text-cyan";
-  const green = "text-green";
-  const slate = "text-slate";
-  const white = "text-white";
-
-  const { profile } = portfolioData;
-
-  // Pre-tokenize the character array to maintain syntax styling during typing
-  const parts = useMemo(() => {
-    if (!profile) return [];
-    return [
-      // Line 1: $ whoami
-      { text: "$ ", color: cyan },
-      { text: "whoami\n", color: white },
-      
-      // Line 2: > Sai Kumar Thota
-      { text: "> ", color: cyan },
-      { text: `${profile.name}\n\n`, color: green },
-      
-      // Line 3: $ cat profile.json
-      { text: "$ ", color: cyan },
-      { text: "cat profile.json\n", color: white },
-      
-      // Line 4: > {
-      { text: "> ", color: cyan },
-      { text: "{\n", color: white },
-      
-      // Line 5: >   "role": "Full Stack Engineer",
-      { text: "> ", color: cyan },
-      { text: "  ", color: white },
-      { text: `"role"`, color: slate },
-      { text: ": ", color: white },
-      { text: `"${profile.role}"`, color: green },
-      { text: ",\n", color: white },
-      
-      // Line 6: >   "exp": "9 months production internship",
-      { text: "> ", color: cyan },
-      { text: "  ", color: white },
-      { text: `"exp"`, color: slate },
-      { text: ": ", color: white },
-      { text: `"${profile.exp}"`, color: green },
-      { text: ",\n", color: white },
-      
-      // Line 8: >   "superpower": "AI-assisted development",
-      { text: "> ", color: cyan },
-      { text: "  ", color: white },
-      { text: `"superpower"`, color: slate },
-      { text: ": ", color: white },
-      { text: `"${profile.superpower}"`, color: green },
-      { text: ",\n", color: white },
-      
-      // Line 9: >   "status": "Open to work 🟢"
-      { text: "> ", color: cyan },
-      { text: "  ", color: white },
-      { text: `"status"`, color: slate },
-      { text: ": ", color: white },
-      { text: `"${profile.status}"`, color: green },
-      { text: "\n", color: white },
-      
-      // Line 10: > }
-      { text: "> ", color: cyan },
-      { text: "}\n\n", color: white },
-      
-      // Line 11: $ 
-      { text: "$ ", color: cyan }
-    ];
-  }, [profile, cyan, green, slate, white]);
-
-  // Flatten parts into characters for typing
-  const allTokens = useMemo(() => 
-    parts.flatMap((part) =>
-      part.text.split("").map((char) => ({
-        char,
-        colorClass: part.color,
-      }))
-    ),
-    [parts]
-  );
-
-  // Autotyped sequence handling
+  // Lightweight 60fps Ambient Vector Grid (Optimized for smooth scrolling)
   useEffect(() => {
-    if (loading || allTokens.length === 0 || introFinished) return;
-    
-    let timerId: NodeJS.Timeout;
-    setCurrentIndex(0);
-
-    const type = () => {
-      setCurrentIndex((prev) => {
-        if (prev < allTokens.length) {
-          const nextChar = allTokens[prev]?.char;
-          const delay = nextChar === "\n" ? 120 : 40;
-          timerId = setTimeout(type, delay);
-          return prev + 1;
-        } else {
-          setIntroFinished(true);
-          return prev;
-        }
-      });
-    };
-
-    timerId = setTimeout(type, 500);
-
-    return () => clearTimeout(timerId);
-  }, [allTokens, loading, introFinished]);
-
-  // Append welcome log when typing finishes
-  useEffect(() => {
-    if (introFinished) {
-      setHistory([
-        { text: "System initialized. Type 'help' for available commands.", colorClass: "text-slate" }
-      ]);
-    }
-  }, [introFinished]);
-
-  // Dynamic outputs for CLI commands based on context data
-  const profileJson = useMemo(() => {
-    if (!profile) return "{}";
-    return JSON.stringify({
-      name: profile.name,
-      role: profile.role,
-      exp: profile.exp,
-      superpower: profile.superpower,
-      status: profile.status,
-      email: profile.email,
-      phone: profile.phone,
-      location: profile.location
-    }, null, 2);
-  }, [profile]);
-
-  const skillsOutput = useMemo(() => {
-    if (!portfolioData.skills) return "";
-    return portfolioData.skills
-      .map(category => {
-        const list = category.skills.map(s => s.name).join(", ");
-        return `${category.name.padEnd(14)}: ${list}`;
-      })
-      .join("\n");
-  }, [portfolioData.skills]);
-
-  const projectsOutput = useMemo(() => {
-    if (!portfolioData.projects) return "";
-    return portfolioData.projects
-      .map(p => `• [${p.name}] - ${p.description}\n  URL: ${p.liveURL || 'N/A'} | Git: ${p.gitURL || 'N/A'}`)
-      .join("\n\n");
-  }, [portfolioData.projects]);
-
-  const expOutput = useMemo(() => {
-    if (!portfolioData.experience) return "";
-    return portfolioData.experience
-      .map(c => `[commit ${c.hash.substring(0, 7)}] - ${c.type}(${c.scope}): ${c.subject} (${c.date})\n  Author: ${c.author}\n  Details: ${c.details.join(", ")}`)
-      .join("\n\n");
-  }, [portfolioData.experience]);
-
-  // Execute terminal CLI command
-  const executeCommand = (cmdText: string) => {
-    const trimmed = cmdText.trim();
-    if (trimmed === "") {
-      setHistory(prev => [...prev, { text: "guest@sai-portfolio:~$ ", colorClass: "text-cyan" }]);
-      return;
-    }
-
-    const parts = trimmed.split(" ");
-    const command = parts[0].toLowerCase();
-    
-    // Add command to history
-    setHistory(prev => [...prev, { text: `guest@sai-portfolio:~$ ${trimmed}`, colorClass: "text-cyan" }]);
-
-    let outputLines: HistoryItem[] = [];
-
-    switch (command) {
-      case "help":
-        outputLines = [
-          { text: "Available commands:", colorClass: "text-slate" },
-          { text: "  whoami      - Display profile owner name and role", colorClass: "text-cyan" },
-          { text: "  skills      - List key programming and design skills", colorClass: "text-cyan" },
-          { text: "  projects    - View highlight projects", colorClass: "text-cyan" },
-          { text: "  exp         - Print work and education experience", colorClass: "text-cyan" },
-          { text: "  contact     - Display contact information & socials", colorClass: "text-cyan" },
-          { text: "  matrix      - Start the matrix code rain animation", colorClass: "text-cyan" },
-          { text: "  clear       - Clear the terminal screen", colorClass: "text-cyan" },
-          { text: "  reset       - Restart the typing terminal introduction", colorClass: "text-cyan" },
-          { text: "  sudo        - Run command as administrator", colorClass: "text-cyan" }
-        ];
-        break;
-      case "clear":
-        setHistory([]);
-        return;
-      case "reset":
-        setHistory([]);
-        setIntroFinished(false);
-        setCurrentIndex(0);
-        return;
-      case "whoami":
-        outputLines = [
-          { text: `${profile?.name || "Sai Kumar Thota"} - ${profile?.role || "Full Stack Engineer"}`, colorClass: "text-green" },
-          { text: `Status: ${profile?.status || "Open to work 🟢"}`, colorClass: "text-white" }
-        ];
-        break;
-      case "cat":
-        if (parts[1] === "profile.json") {
-          outputLines = [{ text: profileJson, colorClass: "text-green" }];
-        } else {
-          outputLines = [{ text: "usage: cat [filename]\nFiles in this directory: profile.json", colorClass: "text-red-400" }];
-        }
-        break;
-      case "skills":
-        outputLines = [
-          { text: "=== SKILLS INVENTORY ===", colorClass: "text-slate" },
-          { text: skillsOutput, colorClass: "text-green" }
-        ];
-        break;
-      case "projects":
-        outputLines = [
-          { text: "=== FEATURED PROJECTS ===", colorClass: "text-slate" },
-          { text: projectsOutput, colorClass: "text-green" }
-        ];
-        break;
-      case "exp":
-      case "experience":
-        outputLines = [
-          { text: "=== GIT COMMIT EXPERIENCE TIMELINE ===", colorClass: "text-slate" },
-          { text: expOutput, colorClass: "text-green" }
-        ];
-        break;
-      case "contact":
-        outputLines = [
-          { text: "=== CONTACT INFORMATION ===", colorClass: "text-slate" },
-          { text: `Email:     ${profile?.email || "saikumarthota2004@gmail.com"}`, colorClass: "text-white" },
-          { text: `Phone:     ${profile?.phone || "+91 90590 81173"}`, colorClass: "text-white" },
-          { text: `Location:  ${profile?.location || "Hyderabad, India"}`, colorClass: "text-white" },
-          { text: `GitHub:    ${portfolioData.socials?.github || "https://github.com/SAIKUMAR039"}`, colorClass: "text-cyan" },
-          { text: `LinkedIn:  ${portfolioData.socials?.linkedin || "https://www.linkedin.com/in/sai-kumar-thota-101764252/"}`, colorClass: "text-cyan" }
-        ];
-        break;
-      case "matrix":
-        setMatrixActive(true);
-        return;
-      case "sudo":
-        outputLines = [{ text: "Permission denied: guest is not in the sudoers file. This incident will be reported.", colorClass: "text-red-400" }];
-        break;
-      default:
-        outputLines = [{ text: `Command not found: ${command}. Type 'help' for available commands.`, colorClass: "text-red-400" }];
-    }
-
-    setHistory(prev => [...prev, ...outputLines]);
-  };
-
-  const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
-    if (e.key === "Enter") {
-      executeCommand(inputValue);
-      setInputValue("");
-    }
-  };
-
-  // Skip autotyping or focus hidden input on terminal click
-  const handleTerminalClick = () => {
-    if (!introFinished) {
-      setCurrentIndex(allTokens.length);
-      setIntroFinished(true);
-    }
-    setTimeout(() => {
-      inputRef.current?.focus();
-    }, 50);
-  };
-
-  // Scroll terminal body container to bottom
-  const scrollToBottom = () => {
-    if (terminalBodyRef.current) {
-      terminalBodyRef.current.scrollTop = terminalBodyRef.current.scrollHeight;
-    }
-  };
-
-  useEffect(() => {
-    if (introFinished || history.length > 0) {
-      scrollToBottom();
-    }
-  }, [history, introFinished, inputValue]);
-
-  // Matrix Code Rain Animation Canvas logic
-  useEffect(() => {
-    if (!matrixActive) return;
     const canvas = canvasRef.current;
     if (!canvas) return;
     const ctx = canvas.getContext("2d");
     if (!ctx) return;
 
-    let resizeId: number;
-    const resizeCanvas = () => {
-      canvas.width = canvas.parentElement?.clientWidth || window.innerWidth;
-      canvas.height = canvas.parentElement?.clientHeight || window.innerHeight;
+    let animationFrameId: number;
+    let width = (canvas.width = canvas.parentElement?.clientWidth || 600);
+    let height = (canvas.height = canvas.parentElement?.clientHeight || 500);
+
+    const handleResize = () => {
+      if (!canvas || !canvas.parentElement) return;
+      width = canvas.width = canvas.parentElement.clientWidth;
+      height = canvas.height = canvas.parentElement.clientHeight;
     };
-    resizeCanvas();
-    window.addEventListener("resize", resizeCanvas);
+    window.addEventListener("resize", handleResize);
 
-    const chars = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ$#@&%*+-/<>[]{}";
-    const charArr = chars.split("");
-    const fontSize = 14;
-    const columns = Math.floor(canvas.width / fontSize) + 1;
-    const drops: number[] = Array(columns).fill(1);
+    const particleCount = 20; // Lightweight node count
+    const particles = Array.from({ length: particleCount }, () => ({
+      x: Math.random() * width,
+      y: Math.random() * height,
+      vx: (Math.random() - 0.5) * 0.3,
+      vy: (Math.random() - 0.5) * 0.3,
+      radius: Math.random() * 1.5 + 1,
+      color: Math.random() > 0.5 ? "#6366f1" : "#8b5cf6",
+    }));
 
-    const draw = () => {
-      ctx.fillStyle = "rgba(8, 11, 16, 0.06)";
-      ctx.fillRect(0, 0, canvas.width, canvas.height);
+    const render = () => {
+      ctx.clearRect(0, 0, width, height);
 
-      ctx.fillStyle = "#00FF88"; // neon green
-      ctx.font = `${fontSize}px 'JetBrains Mono', monospace`;
+      // Subtle architectural grid
+      const gridSize = 40;
+      ctx.strokeStyle = "rgba(255, 255, 255, 0.02)";
+      ctx.lineWidth = 1;
 
-      for (let i = 0; i < drops.length; i++) {
-        const text = charArr[Math.floor(Math.random() * charArr.length)];
-        const x = i * fontSize;
-        const y = drops[i] * fontSize;
-
-        ctx.fillText(text, x, y);
-
-        if (y > canvas.height && Math.random() > 0.975) {
-          drops[i] = 0;
-        }
-        drops[i]++;
+      for (let x = 0; x < width; x += gridSize) {
+        ctx.beginPath();
+        ctx.moveTo(x, 0);
+        ctx.lineTo(x, height);
+        ctx.stroke();
       }
+      for (let y = 0; y < height; y += gridSize) {
+        ctx.beginPath();
+        ctx.moveTo(0, y);
+        ctx.lineTo(width, y);
+        ctx.stroke();
+      }
+
+      // Connecting lines
+      for (let i = 0; i < particleCount; i++) {
+        for (let j = i + 1; j < particleCount; j++) {
+          const dx = particles[i].x - particles[j].x;
+          const dy = particles[i].y - particles[j].y;
+          const distSq = dx * dx + dy * dy;
+
+          if (distSq < 10000) {
+            const alpha = (1 - Math.sqrt(distSq) / 100) * 0.15;
+            ctx.strokeStyle = `rgba(99, 102, 241, ${alpha})`;
+            ctx.beginPath();
+            ctx.moveTo(particles[i].x, particles[i].y);
+            ctx.lineTo(particles[j].x, particles[j].y);
+            ctx.stroke();
+          }
+        }
+      }
+
+      // Update particles
+      particles.forEach((p) => {
+        p.x += p.vx;
+        p.y += p.vy;
+        if (p.x < 0 || p.x > width) p.vx *= -1;
+        if (p.y < 0 || p.y > height) p.vy *= -1;
+
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
+        ctx.fillStyle = p.color;
+        ctx.fill();
+      });
+
+      animationFrameId = requestAnimationFrame(render);
     };
 
-    const intervalId = setInterval(draw, 33);
-
-    const exitMatrix = () => {
-      setMatrixActive(false);
-      setHistory(prev => [...prev, { text: "Exited matrix code rain mode.", colorClass: "text-slate" }]);
-    };
-
-    canvas.addEventListener("click", exitMatrix);
-    const handleWindowKeyDown = () => {
-      exitMatrix();
-    };
-    window.addEventListener("keydown", handleWindowKeyDown);
+    render();
 
     return () => {
-      clearInterval(intervalId);
-      window.removeEventListener("resize", resizeCanvas);
-      window.removeEventListener("keydown", handleWindowKeyDown);
+      cancelAnimationFrame(animationFrameId);
+      window.removeEventListener("resize", handleResize);
     };
-  }, [matrixActive]);
-
-  const scrollToSkills = (): void => {
-    document.getElementById("skills")?.scrollIntoView({ behavior: "smooth" });
-  };
-
-  const visibleTokens = allTokens.slice(0, currentIndex);
-
-  const gridStyle: React.CSSProperties = {
-    backgroundImage: `
-      radial-gradient(circle at center, transparent 30%, var(--bg) 95%),
-      linear-gradient(to right, rgba(0, 212, 255, 0.04) 1px, transparent 1px),
-      linear-gradient(to bottom, rgba(0, 212, 255, 0.04) 1px, transparent 1px)
-    `,
-    backgroundSize: "100% 100%, 32px 32px, 32px 32px",
-  };
-
-  if (loading) {
-    return (
-      <section
-        className="relative min-h-screen flex flex-col justify-center items-center overflow-hidden bg-bg"
-        style={gridStyle}
-      >
-        <div className="font-mono text-cyan text-xs sm:text-sm animate-pulse">
-          $ loading_portfolio_configuration...
-        </div>
-      </section>
-    );
-  }
+  }, []);
 
   return (
-    <section
-      className="relative min-h-screen flex flex-col justify-center items-center overflow-hidden bg-bg"
-      style={gridStyle}
-    >
-      {/* Ambient background glows */}
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[350px] h-[350px] bg-cyan/10 rounded-full blur-[90px] pointer-events-none animate-pulse" />
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[220px] h-[220px] bg-green/5 rounded-full blur-[70px] pointer-events-none" />
+    <section className="relative min-h-screen flex flex-col justify-center pt-28 pb-16 px-6 lg:px-12 bg-[#08090d] overflow-hidden">
+      {/* Soft ambient background glows */}
+      <div className="absolute top-1/4 left-1/4 -translate-x-1/2 -translate-y-1/2 w-[400px] h-[400px] bg-indigo-600/10 rounded-full blur-[100px] pointer-events-none" />
+      <div className="absolute bottom-1/3 right-1/4 w-[350px] h-[350px] bg-purple-600/10 rounded-full blur-[90px] pointer-events-none" />
 
-      {/* Terminal window cursor blink styles */}
-      <style dangerouslySetInnerHTML={{ __html: `
-        @keyframes terminal-blink {
-          0%, 100% { opacity: 1; }
-          50% { opacity: 0; }
-        }
-        .terminal-cursor {
-          animation: terminal-blink 1s step-end infinite;
-          background-color: var(--cyan);
-          display: inline-block;
-          width: 8px;
-          height: 15px;
-          vertical-align: middle;
-        }
-      `}} />
-
-      {/* Terminal Window Container */}
-      <motion.div
-        initial={{ opacity: 0, y: 30, scale: 0.95 }}
-        animate={{ opacity: 1, y: 0, scale: 1 }}
-        transition={{ duration: 0.8, ease: "easeOut" }}
-        className="w-full max-w-2xl px-4 sm:px-6 md:px-0 z-10"
-      >
-        <div 
-          onClick={handleTerminalClick}
-          className="w-full bg-[#0D1117] border border-cyan/15 rounded-lg shadow-2xl overflow-hidden scanlines relative cursor-text group"
+      {/* Main Grid Content */}
+      <div className="w-full max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-12 items-center z-10 my-auto">
+        
+        {/* Left Column: Hero Copy */}
+        <motion.div 
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, ease: "easeOut" }}
+          className="lg:col-span-7 flex flex-col items-start space-y-6"
         >
-          {/* Title Bar */}
-          <div className="flex items-center justify-between px-4 py-3 bg-[#161B22] border-b border-cyan/10 select-none">
-            {/* Left: Window controls */}
-            <div className="flex space-x-2">
-              <div className="w-3 h-3 rounded-full bg-[#FF5F56] border border-[#E0443E]" />
-              <div className="w-3 h-3 rounded-full bg-[#FFBD2E] border border-[#DEA123]" />
-              <div className="w-3 h-3 rounded-full bg-[#27C93F] border border-[#1AAB29]" />
+          {/* Metadata pill badge */}
+          <div className="inline-flex items-center gap-2.5 px-3.5 py-1.5 rounded-full bg-indigo-950/60 border border-indigo-500/30 text-xs font-mono text-indigo-300">
+            <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
+            <span className="font-semibold text-white">SAI KUMAR THOTA</span>
+            <span className="text-zinc-600">•</span>
+            <span className="text-indigo-200">FULL STACK &amp; AI DEVELOPER</span>
+          </div>
+
+          {/* Heading */}
+          <h1 className="font-sans text-4xl sm:text-6xl lg:text-7xl font-extrabold text-white tracking-tight leading-[1.05] text-left">
+            Crafting intelligent software &amp;{" "}
+            <span className="bg-gradient-to-r from-indigo-400 via-purple-300 to-white bg-clip-text text-transparent">
+              scalable digital products.
+            </span>
+          </h1>
+
+          {/* Intro Paragraph */}
+          <p className="font-sans text-base sm:text-lg text-zinc-300 leading-relaxed max-w-2xl text-left">
+            I’m a Full Stack Engineer specialized in building high-performance web applications, robust REST/GraphQL APIs, database architectures, and cloud-powered AI solutions.
+          </p>
+
+          {/* Skill Pills */}
+          <div className="flex flex-wrap gap-2 pt-1 pb-1 font-mono text-xs">
+            <span className="px-3 py-1.5 rounded-lg bg-zinc-900/90 border border-white/10 text-zinc-300 flex items-center gap-1.5 shadow-sm">
+              <Code2 className="w-3.5 h-3.5 text-indigo-400" /> React &amp; Next.js
+            </span>
+            <span className="px-3 py-1.5 rounded-lg bg-zinc-900/90 border border-white/10 text-zinc-300 flex items-center gap-1.5 shadow-sm">
+              <Terminal className="w-3.5 h-3.5 text-purple-400" /> Node.js &amp; Python
+            </span>
+            <span className="px-3 py-1.5 rounded-lg bg-zinc-900/90 border border-white/10 text-zinc-300 flex items-center gap-1.5 shadow-sm">
+              <Cpu className="w-3.5 h-3.5 text-emerald-400" /> AWS &amp; Gemini API
+            </span>
+          </div>
+
+          {/* CTAs */}
+          <div className="flex flex-wrap items-center gap-4 pt-3">
+            <Link
+              href="#projects"
+              className="px-7 py-3.5 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white font-sans font-bold text-sm tracking-wider transition-all duration-200 flex items-center gap-2 shadow-lg shadow-indigo-600/25 group"
+            >
+              <span>EXPLORE WORK</span>
+              <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+            </Link>
+
+            <Link
+              href="#contact"
+              className="px-7 py-3.5 rounded-xl bg-zinc-900 hover:bg-zinc-800 border border-white/10 text-white font-sans font-semibold text-sm tracking-wider transition-all duration-200 flex items-center gap-2 hover:border-indigo-500/40"
+            >
+              <span>LET'S CONNECT</span>
+            </Link>
+          </div>
+        </motion.div>
+
+        {/* Right Column: Interactive Developer Workspace Visual */}
+        <motion.div
+          initial={{ opacity: 0, scale: 0.96 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 0.7, delay: 0.2 }}
+          className="lg:col-span-5 relative w-full rounded-2xl bg-[#0e0f15] border border-white/10 overflow-hidden shadow-2xl group"
+        >
+          {/* Header Bar */}
+          <div className="h-11 bg-zinc-900/90 border-b border-white/10 px-4 flex items-center justify-between font-mono text-xs text-zinc-400">
+            <div className="flex items-center gap-2">
+              <span className="w-3 h-3 rounded-full bg-rose-500/80" />
+              <span className="w-3 h-3 rounded-full bg-amber-500/80" />
+              <span className="w-3 h-3 rounded-full bg-emerald-500/80" />
+              <span className="ml-2 text-zinc-300 font-semibold">sai_developer_workspace</span>
             </div>
-            {/* Center: Title */}
-            <div className="text-xs font-mono text-slate/70 flex items-center gap-1.5">
-              <TerminalIcon className="h-3.5 w-3.5 text-cyan/70" />
-              <span>sai@portfolio: ~ (zsh)</span>
-            </div>
-            {/* Right: Hint Badge */}
-            <div className="text-[10px] font-mono text-slate/50 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-              {introFinished ? "click to type" : "click to skip"}
+            <div className="flex items-center gap-1 text-indigo-400 text-[11px]">
+              <Sparkles className="w-3.5 h-3.5" />
+              <span>LIVE SYSTEM</span>
             </div>
           </div>
 
-          {/* Terminal Body */}
-          <div 
-            ref={terminalBodyRef}
-            className="p-5 font-mono text-xs sm:text-sm md:text-base text-text h-[380px] md:h-[440px] overflow-y-auto bg-[#0D1117] text-left leading-relaxed relative"
-          >
-            {/* Matrix Code Rain Canvas */}
-            {matrixActive && (
-              <div className="absolute inset-0 z-20 bg-[#080B10]">
-                <div className="absolute top-3 right-3 text-[10px] font-mono text-green/60 bg-[#080B10]/80 px-2 py-1 rounded border border-green/20 z-30 select-none pointer-events-none">
-                  [ Click or press key to exit ]
-                </div>
-                <canvas ref={canvasRef} className="w-full h-full block" />
-              </div>
-            )}
+          {/* Interactive Workspace Body */}
+          <div className="p-6 relative min-h-[380px] flex flex-col justify-between space-y-6">
+            
+            {/* Interactive Tabs */}
+            <div className="flex items-center gap-2 p-1 rounded-lg bg-zinc-950 border border-white/10 font-mono text-xs">
+              <button
+                onClick={() => setActiveTab("architecture")}
+                className={`flex-1 py-1.5 rounded text-center transition-colors ${
+                  activeTab === "architecture" ? "bg-indigo-600 text-white font-bold" : "text-zinc-400 hover:text-white"
+                }`}
+              >
+                Architecture
+              </button>
+              <button
+                onClick={() => setActiveTab("stack")}
+                className={`flex-1 py-1.5 rounded text-center transition-colors ${
+                  activeTab === "stack" ? "bg-indigo-600 text-white font-bold" : "text-zinc-400 hover:text-white"
+                }`}
+              >
+                Core Stack
+              </button>
+              <button
+                onClick={() => setActiveTab("metrics")}
+                className={`flex-1 py-1.5 rounded text-center transition-colors ${
+                  activeTab === "metrics" ? "bg-indigo-600 text-white font-bold" : "text-zinc-400 hover:text-white"
+                }`}
+              >
+                Metrics
+              </button>
+            </div>
 
-            {/* Content Output */}
-            {!introFinished ? (
-              <pre className="whitespace-pre-wrap break-all">
-                {visibleTokens.map((token, index) => (
-                  <span key={index} className={token.colorClass}>
-                    {token.char}
-                  </span>
-                ))}
-                <span className="terminal-cursor" />
-              </pre>
-            ) : (
-              <div className="flex flex-col space-y-1.5">
-                {/* Intro Reconstructed */}
-                <div className="whitespace-pre-wrap break-all select-none">
-                  {allTokens.map((token, index) => (
-                    <span key={index} className={token.colorClass}>
-                      {token.char}
-                    </span>
-                  ))}
-                </div>
+            {/* Canvas Ambient Render */}
+            <canvas ref={canvasRef} className="w-full h-full block absolute inset-0 pointer-events-none opacity-40" />
 
-                {/* History Commands and Outputs */}
-                {history.map((line, index) => (
-                  <div key={index} className={`${line.colorClass} whitespace-pre-wrap break-all`}>
-                    {line.text}
+            {/* Tab Content Display */}
+            {activeTab === "architecture" && (
+              <div className="space-y-3 font-mono text-xs relative z-10">
+                <div className="p-3 rounded-lg bg-zinc-900/90 border border-white/10 space-y-1.5">
+                  <div className="text-zinc-400 flex items-center justify-between">
+                    <span className="text-indigo-400 font-semibold">// FRONTEND LAYER</span>
+                    <span className="text-[10px] text-emerald-400">SSR / RSC ENABLED</span>
                   </div>
-                ))}
+                  <div className="text-white font-sans text-xs">Next.js 14 App Router • Tailwind CSS • Framer Motion</div>
+                </div>
 
-                {/* Current Active Input Prompt */}
-                <div className="flex items-center text-cyan pt-1">
-                  <span className="mr-2 select-none">guest@sai-portfolio:~$</span>
-                  <span className="text-white whitespace-pre-wrap break-all">{inputValue}</span>
-                  <span className="terminal-cursor ml-1" />
+                <div className="p-3 rounded-lg bg-zinc-900/90 border border-white/10 space-y-1.5">
+                  <div className="text-zinc-400 flex items-center justify-between">
+                    <span className="text-purple-400 font-semibold">// BACKEND &amp; APIS</span>
+                    <span className="text-[10px] text-indigo-400">REST &amp; GRAPHQL</span>
+                  </div>
+                  <div className="text-white font-sans text-xs">Node.js Express • FastAPI Python • JWT Security</div>
+                </div>
+
+                <div className="p-3 rounded-lg bg-zinc-900/90 border border-white/10 space-y-1.5">
+                  <div className="text-zinc-400 flex items-center justify-between">
+                    <span className="text-emerald-400 font-semibold">// CLOUD &amp; AI PIPELINE</span>
+                    <span className="text-[10px] text-emerald-400">AWS + GEMINI</span>
+                  </div>
+                  <div className="text-white font-sans text-xs">AWS S3/Lambda • Docker • Google Gemini SDK</div>
                 </div>
               </div>
             )}
 
-            {/* Hidden Input field */}
-            {introFinished && (
-              <input
-                ref={inputRef}
-                type="text"
-                value={inputValue}
-                onChange={(e) => setInputValue(e.target.value)}
-                onKeyDown={handleKeyDown}
-                className="absolute opacity-0 pointer-events-none w-0 h-0"
-                autoComplete="off"
-                autoCorrect="off"
-                autoCapitalize="off"
-                spellCheck="false"
-              />
+            {activeTab === "stack" && (
+              <div className="grid grid-cols-2 gap-3 relative z-10 font-mono text-xs">
+                <div className="p-3 rounded-lg bg-zinc-900/90 border border-white/10 space-y-1">
+                  <div className="text-indigo-400 text-[10px]">LANGUAGES</div>
+                  <div className="text-white font-sans font-semibold">TypeScript, Python, SQL</div>
+                </div>
+                <div className="p-3 rounded-lg bg-zinc-900/90 border border-white/10 space-y-1">
+                  <div className="text-purple-400 text-[10px]">FRAMEWORKS</div>
+                  <div className="text-white font-sans font-semibold">React, Next.js, Django</div>
+                </div>
+                <div className="p-3 rounded-lg bg-zinc-900/90 border border-white/10 space-y-1">
+                  <div className="text-emerald-400 text-[10px]">DATABASES</div>
+                  <div className="text-white font-sans font-semibold">PostgreSQL, MongoDB, Supabase</div>
+                </div>
+                <div className="p-3 rounded-lg bg-zinc-900/90 border border-white/10 space-y-1">
+                  <div className="text-amber-400 text-[10px]">AI &amp; CLOUD</div>
+                  <div className="text-white font-sans font-semibold">AWS, Docker, Gemini API</div>
+                </div>
+              </div>
             )}
-          </div>
-        </div>
-      </motion.div>
 
-      {/* Explore Button */}
+            {activeTab === "metrics" && (
+              <div className="grid grid-cols-2 gap-3 relative z-10 font-mono text-xs">
+                <div className="p-4 rounded-lg bg-zinc-900/90 border border-white/10 text-center space-y-1">
+                  <div className="text-2xl font-extrabold text-indigo-400 font-sans">9 MOS</div>
+                  <div className="text-[10px] text-zinc-400">PRODUCTION INTERNSHIP</div>
+                </div>
+                <div className="p-4 rounded-lg bg-zinc-900/90 border border-white/10 text-center space-y-1">
+                  <div className="text-2xl font-extrabold text-emerald-400 font-sans">10+</div>
+                  <div className="text-[10px] text-zinc-400">PROJECTS BUILT</div>
+                </div>
+                <div className="p-4 rounded-lg bg-zinc-900/90 border border-white/10 text-center space-y-1">
+                  <div className="text-2xl font-extrabold text-purple-400 font-sans">8.5</div>
+                  <div className="text-[10px] text-zinc-400">B.TECH CGPA</div>
+                </div>
+                <div className="p-4 rounded-lg bg-zinc-900/90 border border-white/10 text-center space-y-1">
+                  <div className="text-2xl font-extrabold text-amber-400 font-sans">6+</div>
+                  <div className="text-[10px] text-zinc-400">CERTIFICATIONS</div>
+                </div>
+              </div>
+            )}
+
+            {/* Bottom Status bar */}
+            <div className="p-3 rounded-lg bg-zinc-950 border border-white/10 flex items-center justify-between text-xs font-mono text-zinc-400 relative z-10">
+              <span className="flex items-center gap-2 text-white">
+                <CheckCircle2 className="w-4 h-4 text-emerald-400" />
+                <span>Open for Full-Time Roles</span>
+              </span>
+              <span className="text-indigo-400">2026 GRAD</span>
+            </div>
+
+          </div>
+        </motion.div>
+
+      </div>
+
+      {/* Bottom Scroll Indicator */}
       <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
-        transition={{ delay: 2, duration: 1 }}
-        className="absolute bottom-8 z-10"
+        transition={{ delay: 0.8, duration: 0.6 }}
+        className="w-full flex flex-col items-center justify-center mt-12 z-10"
       >
-        <button
-          onClick={scrollToSkills}
-          className="flex flex-col items-center gap-2 group font-mono text-sm text-cyan/70 hover:text-cyan transition-colors duration-300"
+        <Link
+          href="#capabilities"
+          className="flex flex-col items-center gap-1.5 group font-mono text-xs text-zinc-500 hover:text-white transition-colors"
         >
-          <span className="relative">
-            --explore
-            <span className="absolute -bottom-1 left-0 w-0 h-[2px] bg-cyan group-hover:w-full transition-all duration-300" />
-          </span>
-          <ChevronDown className="h-4 w-4 animate-bounce group-hover:translate-y-0.5 transition-transform" />
-        </button>
+          <span className="tracking-widest uppercase">SCROLL TO EXPLORE</span>
+          <ChevronDown className="w-4 h-4 text-indigo-400 animate-bounce" />
+        </Link>
       </motion.div>
     </section>
   );

@@ -1,146 +1,90 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { motion } from "framer-motion";
-import { Terminal, ShieldCheck, Award, Zap, Server } from "lucide-react";
-
-interface AchievementLog {
-  timestamp: string;
-  service: string;
-  status: "OK" | "INFO" | "WARN";
-  message: string;
-  subtext?: string;
-}
-
+import { ShieldCheck } from "lucide-react";
 import { usePortfolio } from "@/context/portfolio-context";
 
 export const AchievementsSection: React.FC = () => {
   const { portfolioData } = usePortfolio();
-  const logs = portfolioData.achievements;
-  const [visibleCount, setVisibleCount] = useState(0);
-  const [inView, setInView] = useState(false);
+  const achievements = portfolioData.achievements || [];
 
-  useEffect(() => {
-    if (!inView) return;
-
-    const timer = setInterval(() => {
-      setVisibleCount((prev) => {
-        if (prev < logs.length) {
-          return prev + 1;
-        }
-        clearInterval(timer);
-        return prev;
-      });
-    }, 400);
-
-    return () => clearInterval(timer);
-  }, [inView, logs.length]);
+  const getIssuer = (msg: string) => {
+    if (msg.includes("Tata Technologies")) return "Tata Technologies";
+    if (msg.includes("AWS")) return "Amazon Web Services (AWS)";
+    if (msg.includes("ServiceNow")) return "ServiceNow / AICTE";
+    if (msg.includes("Oracle")) return "Oracle Cloud Infrastructure";
+    return "Industry Credential";
+  };
 
   return (
-    <section id="achievements" className="py-24 px-6 bg-[#080B10]/90 relative">
-      {/* Scroll target observer anchor */}
-      <div 
-        className="absolute top-1/3 left-0 w-full h-10 pointer-events-none" 
-        ref={(el) => {
-          if (!el) return;
-          const observer = new IntersectionObserver(
-            ([entry]) => {
-              if (entry.isIntersecting) {
-                setInView(true);
-                observer.disconnect();
-              }
-            },
-            { threshold: 0.1 }
-          );
-          observer.observe(el);
-        }}
-      />
-
-      <div className="max-w-4xl mx-auto relative z-10">
-        {/* Title */}
-        <div className="mb-12 font-mono">
-          <div className="text-cyan text-sm mb-2 font-semibold tracking-wider flex items-center gap-2">
-            <Server className="h-4 w-4" />
-            <span>systemctl status achievements.service</span>
+    <section id="certifications" className="py-28 px-6 lg:px-12 bg-[#08090d] border-t border-white/5 relative">
+      <div className="max-w-7xl mx-auto">
+        
+        {/* Section Header */}
+        <div className="flex flex-col md:flex-row md:items-end justify-between mb-16 gap-6">
+          <div>
+            <div className="font-mono text-xs text-indigo-400 uppercase tracking-widest mb-3 flex items-center gap-2">
+              <span className="w-2 h-2 rounded-full bg-indigo-500" />
+              <span>06 — CREDENTIALS &amp; RECOGNITION</span>
+            </div>
+            <h2 className="font-sans text-4xl sm:text-5xl font-extrabold text-white tracking-tight">
+              Certifications &amp; Honors
+            </h2>
           </div>
-          <h2 className="text-3xl md:text-4xl font-bold text-white tracking-tight animate-pulse">
-            Achievements & Certs
-          </h2>
-          <p className="text-slate mt-2 text-sm md:text-base font-sans">
-            // Sequential system diagnostic output loading certifications and national recognition milestones.
+          <p className="text-zinc-400 font-sans text-sm md:text-base max-w-md">
+            Validated certifications in AWS cloud architecture, Oracle Generative AI, ServiceNow engineering, and national competition awards.
           </p>
         </div>
 
-        {/* Console Box */}
-        <div className="bg-[#0D1117] border border-cyan/15 rounded-lg overflow-hidden scanlines shadow-2xl">
-          {/* Top terminal tab bar */}
-          <div className="flex items-center justify-between px-4 py-3 bg-[#161B22] border-b border-cyan/10 font-mono text-xs text-slate/60 select-none">
-            <div className="flex space-x-2">
-              <span className="w-2.5 h-2.5 rounded-full bg-cyan/50" />
-              <span className="w-2.5 h-2.5 rounded-full bg-green/50" />
-              <span className="w-2.5 h-2.5 rounded-full bg-slate/50" />
-            </div>
-            <span>system_boot_diagnostics.sh</span>
-            <span className="text-[10px] text-green/70">● ACTIVE</span>
-          </div>
+        {/* Credentials Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          {achievements.map((item, idx) => {
+            const cleanTitle = item.message.replace(/^LOADED\s*/, "");
+            const issuer = getIssuer(cleanTitle);
 
-          {/* Terminal Console Log Output */}
-          <div className="p-6 font-mono text-xs md:text-sm text-text min-h-[380px] bg-[#0D1117] space-y-4">
-            {/* Linux boot style system summary */}
-            <div className="text-slate/60 border-b border-cyan/5 pb-3">
-              <div>[  OK  ] Reached target System Initialization.</div>
-              <div>[  OK  ] Starting Achievements Diagnostics Service...</div>
-              <div className="text-green mt-1">active (running) since Fri 2026-06-26; diagnostic_timer=active</div>
-            </div>
-
-            {/* Sequential logs */}
-            <div className="space-y-4 select-text">
-              {logs.map((log, index) => {
-                const isVisible = index < visibleCount;
-                
-                return (
-                  <div
-                    key={log.service}
-                    className={`transition-all duration-500 transform ${
-                      isVisible 
-                        ? "opacity-100 translate-x-0" 
-                        : "opacity-0 -translate-x-4 pointer-events-none"
-                    }`}
-                  >
-                    <div className="flex flex-wrap items-center gap-2">
-                      <span className="text-slate/40">[{log.timestamp}]</span>
-                      <span className="text-green font-bold">[  OK  ]</span>
-                      <span className="text-cyan font-semibold">{log.service}</span>
-                      <span className="text-white">: {log.message}</span>
-                    </div>
-                    {log.subtext && (
-                      <div className="pl-8 md:pl-20 text-slate text-xs font-sans mt-1 max-w-2xl leading-relaxed">
-                        &gt; {log.subtext}
-                      </div>
-                    )}
+            return (
+              <motion.div
+                key={idx}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, margin: "-50px" }}
+                transition={{ duration: 0.4, delay: idx * 0.05 }}
+                className="p-8 rounded-2xl bg-[#0e0f15] border border-white/10 hover:border-indigo-500/40 transition-all duration-300 shadow-xl flex flex-col justify-between group"
+              >
+                <div className="space-y-4">
+                  {/* Category Pill Tag */}
+                  <div className="flex items-center justify-between">
+                    <span className="px-3 py-1 rounded-md bg-zinc-900 border border-white/10 font-mono text-[10px] text-indigo-300 uppercase tracking-wider">
+                      {issuer}
+                    </span>
+                    <ShieldCheck className="w-5 h-5 text-indigo-400 group-hover:scale-110 transition-transform" />
                   </div>
-                );
-              })}
 
-              {/* Cursor block showing at the end */}
-              {visibleCount >= logs.length ? (
-                <div className="pt-2 text-green font-semibold animate-pulse flex items-center gap-2">
-                  <span>[ SUCCESS ] System diagnostics completed. All systems nominal.</span>
-                  <span className="inline-block w-2 h-4 bg-green" />
+                  {/* Title */}
+                  <h3 className="font-sans text-lg font-bold text-white tracking-tight leading-snug group-hover:text-indigo-300 transition-colors">
+                    {cleanTitle}
+                  </h3>
+
+                  {/* Description Subtext */}
+                  <p className="font-sans text-xs text-zinc-400 leading-relaxed">
+                    {item.subtext}
+                  </p>
                 </div>
-              ) : inView ? (
-                <div className="pt-2 text-cyan flex items-center gap-2">
-                  <span>Loading services...</span>
-                  <span className="inline-block w-2 h-4 bg-cyan animate-ping" />
+
+                {/* Footer status */}
+                <div className="pt-6 mt-6 border-t border-white/10 flex items-center justify-between font-mono text-[10px] text-zinc-500">
+                  <span className="flex items-center gap-1.5 text-emerald-400 font-semibold">
+                    <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
+                    VERIFIED CREDENTIAL
+                  </span>
+                  <span>VALIDATED</span>
                 </div>
-              ) : (
-                <div className="text-slate/40 text-xs italic">
-                  Scroll down to initialize achievements.service boot sequence...
-                </div>
-              )}
-            </div>
-          </div>
+              </motion.div>
+            );
+          })}
         </div>
+
       </div>
     </section>
   );

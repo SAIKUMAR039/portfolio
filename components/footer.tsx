@@ -1,106 +1,98 @@
 "use client";
 
-import { motion } from "framer-motion";
-import { Github, Linkedin, Mail } from "lucide-react";
+import React from "react";
 import Link from "next/link";
 import { usePortfolio } from "@/context/portfolio-context";
+import { Github, Linkedin, Mail, ArrowUpRight } from "lucide-react";
 
-const navigation = {
-  main: [
-    { name: "About", href: "#about" },
-    { name: "Skills", href: "#skills" },
-    { name: "Projects", href: "#projects" },
-    { name: "Contact", href: "#contact" },
-  ],
-};
-
-const Footer = () => {
+export const Footer = () => {
   const { portfolioData } = usePortfolio();
-  const { profile, socials } = portfolioData;
+  const profile = portfolioData?.profile;
+  const socials = portfolioData?.socials;
 
-  const socialLinks = [
-    {
-      name: "GitHub",
-      icon: Github,
-      href: socials.github,
-      color: "hover:text-gray-900 dark:hover:text-white",
-    },
-    {
-      name: "LinkedIn",
-      icon: Linkedin,
-      href: socials.linkedin,
-      color: "hover:text-blue-600",
-    },
-    {
-      name: "Email",
-      icon: Mail,
-      href: `mailto:${profile.email}`,
-      color: "hover:text-red-500",
-    },
-  ];
+  const currentYear = new Date().getFullYear();
 
   return (
-    <footer className="bg-background border-t border-cyan/10">
-      <div className="max-w-6xl mx-auto py-12 px-6">
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-          {/* Brand Section */}
-          <div className="space-y-4">
-            <h3 className="text-lg font-semibold text-white font-mono">{profile.name}</h3>
-            <p className="text-sm text-slate leading-relaxed">
-              Full Stack Developer passionate about creating innovative, dynamic software systems.
+    <footer className="bg-[#08090d] border-t border-white/10 text-zinc-400 font-sans py-16 px-6 lg:px-12">
+      <div className="max-w-7xl mx-auto">
+        <div className="grid grid-cols-1 md:grid-cols-12 gap-12 pb-12 border-b border-white/10">
+          
+          {/* Brand */}
+          <div className="md:col-span-5 space-y-4">
+            <div className="flex flex-col">
+              <span className="font-sans text-lg font-extrabold text-white tracking-tight">
+                SAI KUMAR THOTA
+              </span>
+              <span className="font-mono text-xs text-zinc-500 tracking-wider uppercase mt-0.5">
+                Full Stack Engineer / Software Developer
+              </span>
+            </div>
+            <p className="text-sm text-zinc-400 max-w-sm leading-relaxed">
+              Architecting enterprise digital applications, cloud services, scalable APIs, and intelligent AI models.
             </p>
           </div>
 
-          {/* Navigation Links */}
-          <div className="space-y-4">
-            <h3 className="text-lg font-semibold">Navigation</h3>
-            <ul className="space-y-2">
-              {navigation.main.map((item) => (
-                <li key={item.name}>
-                  <Link
-                    href={item.href}
-                    className="text-sm text-muted-foreground hover:text-primary transition-colors"
-                  >
-                    {item.name}
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          </div>
-
-          {/* Social Links */}
-          <div className="space-y-4">
-            <h3 className="text-lg font-semibold">Connect</h3>
-            <div className="flex space-x-4">
-              {socialLinks.map((item) => (
-                <motion.a
-                  key={item.name}
-                  href={item.href}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  whileHover={{ scale: 1.1 }}
-                  whileTap={{ scale: 0.95 }}
-                  className={`text-muted-foreground ${item.color} transition-colors`}
-                >
-                  <span className="sr-only">{item.name}</span>
-                  <item.icon className="h-6 w-6" />
-                </motion.a>
-              ))}
+          {/* Quick Links */}
+          <div className="md:col-span-4 space-y-3 font-mono text-xs">
+            <span className="text-zinc-500 uppercase tracking-widest block mb-2">SECTIONS</span>
+            <div className="grid grid-cols-2 gap-2">
+              <Link href="#projects" className="hover:text-white transition-colors">SELECTED WORK</Link>
+              <Link href="#capabilities" className="hover:text-white transition-colors">CAPABILITIES</Link>
+              <Link href="#stack" className="hover:text-white transition-colors">STACK MATRIX</Link>
+              <Link href="#journey" className="hover:text-white transition-colors">THE JOURNEY</Link>
+              <Link href="#certifications" className="hover:text-white transition-colors">CREDENTIALS</Link>
+              <Link href="#about" className="hover:text-white transition-colors">ABOUT ME</Link>
             </div>
           </div>
+
+          {/* Connect */}
+          <div className="md:col-span-3 space-y-3 font-mono text-xs">
+            <span className="text-zinc-500 uppercase tracking-widest block mb-2">CONNECT</span>
+            <div className="flex flex-col gap-2">
+              <a
+                href={socials?.github || "https://github.com/SAIKUMAR039"}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="hover:text-white transition-colors flex items-center gap-1.5"
+              >
+                <Github className="w-3.5 h-3.5 text-indigo-400" />
+                <span>GITHUB</span>
+                <ArrowUpRight className="w-3 h-3 text-zinc-600" />
+              </a>
+
+              <a
+                href={socials?.linkedin || "https://www.linkedin.com/in/sai-kumar-thota-101764252/"}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="hover:text-white transition-colors flex items-center gap-1.5"
+              >
+                <Linkedin className="w-3.5 h-3.5 text-indigo-400" />
+                <span>LINKEDIN</span>
+                <ArrowUpRight className="w-3 h-3 text-zinc-600" />
+              </a>
+
+              <a
+                href={`mailto:${profile?.email || "saikumarthota2004@gmail.com"}`}
+                className="hover:text-white transition-colors flex items-center gap-1.5"
+              >
+                <Mail className="w-3.5 h-3.5 text-indigo-400" />
+                <span>EMAIL</span>
+                <ArrowUpRight className="w-3 h-3 text-zinc-600" />
+              </a>
+            </div>
+          </div>
+
         </div>
 
-        {/* Copyright */}
-        <div className="mt-8 pt-8 border-t border-cyan/10 flex flex-col sm:flex-row items-center justify-between gap-4">
-          <p className="text-sm text-slate select-none text-center sm:text-left">
-            © {new Date().getFullYear()} {profile.name}. All rights reserved.
-          </p>
-          <Link
-            href="/admin"
-            className="text-xs text-slate/30 hover:text-cyan/50 font-mono transition-colors duration-200"
-          >
-            --admin-console
-          </Link>
+        {/* Bottom copyright */}
+        <div className="pt-8 flex flex-col sm:flex-row items-center justify-between gap-4 font-mono text-xs text-zinc-500">
+          <p>© {currentYear} SAI KUMAR THOTA. ALL RIGHTS RESERVED.</p>
+          <div className="flex items-center gap-4">
+            <span className="text-zinc-500">Designed &amp; engineered by Sai Kumar Thota</span>
+            <Link href="/admin" className="text-zinc-500 hover:text-zinc-300 transition-colors">
+              // ADMIN
+            </Link>
+          </div>
         </div>
       </div>
     </footer>

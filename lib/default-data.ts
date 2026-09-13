@@ -1,4 +1,5 @@
 import { PortfolioData } from "@/types/portfolio";
+import { projects } from "@/lib/projects";
 
 export const defaultPortfolioData: PortfolioData = {
   profile: {
@@ -414,7 +415,7 @@ export const defaultPortfolioData: PortfolioData = {
       ]
     }
   ],
-  projects: [],
+  projects: projects as any,
   achievements: [
     {
       timestamp: "09:12:45",

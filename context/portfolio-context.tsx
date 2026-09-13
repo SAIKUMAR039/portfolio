@@ -15,6 +15,36 @@ interface PortfolioContextProps {
 
 const PortfolioContext = createContext<PortfolioContextProps | undefined>(undefined);
 
+// Helper to safely merge loaded data with defaults
+const mergeWithDefaults = (loaded: any): PortfolioData => {
+  if (!loaded || typeof loaded !== "object") return defaultPortfolioData;
+
+  return {
+    ...defaultPortfolioData,
+    ...loaded,
+    profile: {
+      ...defaultPortfolioData.profile,
+      ...(loaded.profile || {}),
+    },
+    socials: {
+      ...defaultPortfolioData.socials,
+      ...(loaded.socials || {}),
+    },
+    skills: (Array.isArray(loaded.skills) && loaded.skills.length > 0)
+      ? loaded.skills
+      : defaultPortfolioData.skills,
+    experience: (Array.isArray(loaded.experience) && loaded.experience.length > 0)
+      ? loaded.experience
+      : defaultPortfolioData.experience,
+    projects: (Array.isArray(loaded.projects) && loaded.projects.length > 0)
+      ? loaded.projects
+      : defaultPortfolioData.projects,
+    achievements: (Array.isArray(loaded.achievements) && loaded.achievements.length > 0)
+      ? loaded.achievements
+      : defaultPortfolioData.achievements,
+  };
+};
+
 export const PortfolioProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [portfolioData, setPortfolioData] = useState<PortfolioData>(defaultPortfolioData);
   const [loading, setLoading] = useState(true);
@@ -33,12 +63,13 @@ export const PortfolioProvider: React.FC<{ children: React.ReactNode }> = ({ chi
           .maybeSingle();
 
         if (error) {
-          console.warn("Supabase fetch failed or table not found, trying local storage:", error.message);
+          console.warn("Supabase fetch notice:", error.message);
           setIsDbConfigured(false);
           loadFromLocalStorage();
         } else if (data && data.data && Object.keys(data.data).length > 0) {
-          // Success from DB!
-          setPortfolioData(data.data as PortfolioData);
+          // Success from DB! Merge with defaults
+          const merged = mergeWithDefaults(data.data);
+          setPortfolioData(merged);
           setIsDbConfigured(true);
         } else {
           // Connected to DB but row is empty
@@ -60,7 +91,7 @@ export const PortfolioProvider: React.FC<{ children: React.ReactNode }> = ({ chi
         if (local) {
           const parsed = JSON.parse(local);
           if (parsed && Object.keys(parsed).length > 0) {
-            setPortfolioData(parsed);
+            setPortfolioData(mergeWithDefaults(parsed));
           }
         }
       } catch (err) {
@@ -73,18 +104,18 @@ export const PortfolioProvider: React.FC<{ children: React.ReactNode }> = ({ chi
 
   const saveData = async (newData: PortfolioData): Promise<{ success: boolean; error?: string }> => {
     try {
-      // Update local state first
-      setPortfolioData(newData);
+      const merged = mergeWithDefaults(newData);
+      setPortfolioData(merged);
 
-      // Save to localStorage as a local backup
-      localStorage.setItem("portfolio_data", JSON.stringify(newData));
+      // Save to localStorage
+      localStorage.setItem("portfolio_data", JSON.stringify(merged));
 
       // Save to Supabase
       const { error } = await supabase
         .from("portfolio_config")
         .upsert({
           id: 1,
-          data: newData,
+          data: merged,
           updated_at: new Date().toISOString()
         });
 
@@ -112,7 +143,6 @@ export const PortfolioProvider: React.FC<{ children: React.ReactNode }> = ({ chi
       setPortfolioData(defaultPortfolioData);
       localStorage.removeItem("portfolio_data");
 
-      // Try to clear the database row or reset it to default
       await supabase
         .from("portfolio_config")
         .upsert({

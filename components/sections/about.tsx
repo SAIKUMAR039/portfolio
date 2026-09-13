@@ -1,172 +1,83 @@
 "use client";
-import { SkillsList } from "@/components/skills-list";
-import ExperienceCard from "@/components/experience-card";
-import GitHubInfo from "@/components/github-info";
-import BlogList from "@/components/blog-list";
+
+import React from "react";
 import { motion } from "framer-motion";
-import { Button } from "@/components/ui/button";
-import { Download, Mail, Github, Linkedin } from "lucide-react";
-import { Card } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
+import { usePortfolio } from "@/context/portfolio-context";
+import { Cpu, Heart, Compass } from "lucide-react";
 
-const skills = ["React", "Next.js", "Node.js", "TypeScript", "MongoDB", "AWS"];
+export const AboutSection: React.FC = () => {
+  const { portfolioData } = usePortfolio();
+  const profile = portfolioData?.profile;
 
-const experiences = [
-  {
-    title: "WEB DEVELOPER",
-    company: "CODIT TECH SOLUTIONS",
-    period: "2024-2024"
-  },
-  {
-    title: "Undergraduate in Computer Science",
-    company: "SR University , Warangal",
-    period: "2022 - 2026 "
-  }
-];
-
-const blogs = [
-  {
-    title: "React.js: The Powerhouse of Modern Web Development",
-    link: "https://medium.com/@saikumarthota2004/react-js-the-powerhouse-of-modern-web-development-15f7bd5a03e6",
-    date: "2024-12-15"
-  },
-  {
-    title:"The Journey of Learning: How I Balance Building Projects and Pursuing My B-Tech in Computer Science",
-    link:"https://medium.com/@saikumarthota2004/the-journey-of-learning-how-i-balance-building-projects-and-pursuing-my-b-tech-in-computer-science-f8751c590062",
-    date:"2024-12-16"
-  }
-  
-];
-
-const fadeInUp = {
-  initial: { opacity: 0, y: 20 },
-  animate: { opacity: 1, y: 0 },
-  transition: { duration: 0.5 }
-};
-
-const staggerContainer = {
-  animate: {
-    transition: {
-      staggerChildren: 0.1
-    }
-  }
-};
-
-export function AboutSection() {
   return (
-    <section id="about" className="py-20 px-6">
-      <div className="max-w-6xl mx-auto">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5 }}
-          viewport={{ once: true }}
-          className="text-center mb-12"
-        >
-          <h2 className="text-3xl font-bold mb-4">About Me</h2>
-          <p className="text-muted-foreground max-w-2xl mx-auto">
-            A passionate full-stack developer with expertise in building modern web applications
-            and machine learning solutions.
-          </p>
-        </motion.div>
-
-        <div className="grid md:grid-cols-2 gap-12 items-start">
-          <motion.div
-            variants={staggerContainer}
-            initial="initial"
-            whileInView="animate"
-            viewport={{ once: true }}
-            className="space-y-6"
-          >
-            <motion.div variants={fadeInUp}>
-              <h3 className="text-xl font-semibold mb-4">Background</h3>
-              <p className="text-muted-foreground leading-relaxed">
-                I'm a Computer Science graduate with a strong foundation in software development
-                and machine learning. My journey in tech started with a passion for creating
-                innovative solutions that solve real-world problems.
-              </p>
-            </motion.div>
-
-            <motion.div variants={fadeInUp}>
-              <h3 className="text-xl font-semibold mb-4">Experience</h3>
-              <div className="space-y-4">
-                <div className="flex items-start gap-4">
-                  <div className="w-2 h-2 rounded-full bg-primary mt-2" />
-                  <div>
-                    <h4 className="font-medium">Full Stack Developer</h4>
-                    <p className="text-sm text-muted-foreground">CODIT TECH SOLUTIONS</p>
-                    <p className="text-sm text-muted-foreground mt-2">
-                      Led development of multiple web applications using React, Node.js, and cloud technologies.
-                    </p>
-                  </div>
-                </div>
-                
-              </div>
-            </motion.div>
-
-            <motion.div variants={fadeInUp}>
-              <h3 className="text-xl font-semibold mb-4">Education</h3>
-              <div className="flex items-start gap-4">
-                <div className="w-2 h-2 rounded-full bg-primary mt-2" />
-                <div>
-                  <h4 className="font-medium">B.Tech. in Computer Science</h4>
-                  <p className="text-sm text-muted-foreground">SR University• 2022 - 2026</p>
-                </div>
-              </div>
-            </motion.div>
-          </motion.div>
-
-          <motion.div
-            initial={{ opacity: 0, x: 20 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.5 }}
-            viewport={{ once: true }}
-            className="space-y-6"
-          >
-            <Card className="p-6">
-              <h3 className="text-xl font-semibold mb-4">Quick Links</h3>
-              <div className="grid grid-cols-2 gap-4">
-                <Button variant="outline" className="w-full" asChild>
-                  <a href="/assets/Resume.pdf" target="_blank" rel="noopener noreferrer">
-                    <Download className="h-4 w-4 mr-2" />
-                    Resume
-                  </a>
-                </Button>
-                <Button variant="outline" className="w-full" asChild>
-                  <a href="mailto:saikumarthota2004@gmail.com">
-                    <Mail className="h-4 w-4 mr-2" />
-                    Contact
-                  </a>
-                </Button>
-                <Button variant="outline" className="w-full" asChild>
-                  <a href="https://github.com/SAIKUMAR039" target="_blank" rel="noopener noreferrer">
-                    <Github className="h-4 w-4 mr-2" />
-                    GitHub
-                  </a>
-                </Button>
-                <Button variant="outline" className="w-full" asChild>
-                  <a href="https://www.linkedin.com/in/sai-kumar-thota-101764252/" target="_blank" rel="noopener noreferrer">
-                    <Linkedin className="h-4 w-4 mr-2" />
-                    LinkedIn
-                  </a>
-                </Button>
-              </div>
-            </Card>
-
-            <Card className="p-6">
-              <h3 className="text-xl font-semibold mb-4">Core Competencies</h3>
-              <div className="flex flex-wrap gap-2">
-                <Badge variant="secondary">Full Stack Development</Badge>
-                <Badge variant="secondary">Machine Learning</Badge>
-                <Badge variant="secondary">Cloud Computing</Badge>
-                <Badge variant="secondary">UI/UX Design</Badge>
-                <Badge variant="secondary">Agile Methodologies</Badge>
-                <Badge variant="secondary">Problem Solving</Badge>
-              </div>
-            </Card>
-          </motion.div>
+    <section id="about" className="py-28 px-6 lg:px-12 bg-[#08090d] border-t border-white/5 relative">
+      <div className="max-w-7xl mx-auto">
+        
+        {/* Section Header */}
+        <div className="font-mono text-xs text-indigo-400 uppercase tracking-widest mb-3 flex items-center gap-2">
+          <span className="w-2 h-2 rounded-full bg-indigo-500" />
+          <span>07 — PHILOSOPHY &amp; STORY</span>
         </div>
+
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
+          
+          {/* Left Column: Heading & Large Quote */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: "-50px" }}
+            transition={{ duration: 0.5 }}
+            className="lg:col-span-5 space-y-6"
+          >
+            <h2 className="font-sans text-4xl sm:text-5xl font-extrabold text-white tracking-tight leading-none">
+              MORE THAN CODE.
+            </h2>
+
+            <div className="p-6 rounded-2xl bg-[#0e0f15] border border-white/10 space-y-4 shadow-xl">
+              <span className="font-mono text-xs text-indigo-400 uppercase tracking-wider block font-semibold">
+                ENGINEERING CORE VALUES
+              </span>
+              <ul className="space-y-3 font-sans text-sm text-zinc-300">
+                <li className="flex items-start gap-2.5">
+                  <Compass className="w-4 h-4 text-indigo-400 flex-shrink-0 mt-0.5" />
+                  <span><strong>Product-First Mindset:</strong> Writing software designed around real user needs, latency requirements, and intuitive UI interactions.</span>
+                </li>
+                <li className="flex items-start gap-2.5">
+                  <Cpu className="w-4 h-4 text-purple-400 flex-shrink-0 mt-0.5" />
+                  <span><strong>AI Automation:</strong> Levering cutting-edge LLMs (Gemini, OpenAI) and machine learning models to solve complex real-world problems.</span>
+                </li>
+                <li className="flex items-start gap-2.5">
+                  <Heart className="w-4 h-4 text-rose-400 flex-shrink-0 mt-0.5" />
+                  <span><strong>Continuous Mastery:</strong> Constantly expanding cloud architecture, database tuning, and modern framework proficiency.</span>
+                </li>
+              </ul>
+            </div>
+          </motion.div>
+
+          {/* Right Column: Authentic Narrative */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: "-50px" }}
+            transition={{ duration: 0.5, delay: 0.1 }}
+            className="lg:col-span-7 font-sans text-base sm:text-lg text-zinc-300 leading-relaxed space-y-6"
+          >
+            <p>
+              My journey into software engineering started with a deep curiosity for how complex digital applications operate behind the scenes. Based in Hyderabad, India, I’m currently completing my B.Tech in Computer Science &amp; Engineering at SR University while working on production web platforms.
+            </p>
+            <p>
+              During my 9-month production internship at Codit Tech Solutions, I engineered full-stack components with React, Node.js, and PostgreSQL, reducing rendering latency and building production REST APIs. I thrive in collaborative environments where code quality, performance metrics, and clean system architecture are valued.
+            </p>
+            <p>
+              Beyond traditional web development, I have a passion for artificial intelligence. From developing AI resume screening engines to generative image platforms and machine learning price prediction models, I enjoy building intelligent software that automates tedious tasks and opens up new possibilities.
+            </p>
+          </motion.div>
+
+        </div>
+
       </div>
     </section>
   );
-}
+};
+
+export default AboutSection;
