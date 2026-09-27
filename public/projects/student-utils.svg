@@ -1,0 +1,81 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1280 720" width="1280" height="720">
+  <defs>
+    <linearGradient id="su-bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0b101b"/>
+      <stop offset="100%" stop-color="#060910"/>
+    </linearGradient>
+    <linearGradient id="su-orange" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#f97316"/>
+      <stop offset="100%" stop-color="#ea580c"/>
+    </linearGradient>
+  </defs>
+  <rect width="1280" height="720" fill="url(#su-bg)"/>
+  <!-- Top bar -->
+  <rect x="40" y="30" width="1200" height="60" rx="12" fill="#111827" stroke="#1f293d" stroke-width="1.5"/>
+  <text x="65" y="66" fill="#ffffff" font-family="-apple-system, sans-serif" font-weight="700" font-size="18">🎓 Student Utils Suite</text>
+  <rect x="250" y="44" width="110" height="28" rx="14" fill="#431407" stroke="#f97316" stroke-width="1"/>
+  <text x="264" y="62" fill="#fdba74" font-family="monospace" font-size="11">SEMESTER 6</text>
+  <text x="1000" y="66" fill="#94a3b8" font-family="monospace" font-size="13">CGPA: <tspan fill="#34d399" font-weight="700">8.50</tspan> | Study Time: <tspan fill="#f97316" font-weight="700">4.5 hrs</tspan></text>
+  <!-- Card 1: Study Timer Pomodoro -->
+  <g transform="translate(40, 110)">
+    <rect width="380" height="280" rx="16" fill="#0f1624" stroke="#1f293d" stroke-width="1.5"/>
+    <text x="24" y="36" fill="#ffffff" font-family="-apple-system, sans-serif" font-weight="700" font-size="16">Pomodoro Study Timer</text>
+    <circle cx="190" cy="140" r="70" fill="none" stroke="#1e293b" stroke-width="10"/>
+    <circle cx="190" cy="140" r="70" fill="none" stroke="#f97316" stroke-width="10" stroke-dasharray="440" stroke-dashoffset="110"/>
+    <text x="190" y="148" fill="#ffffff" font-family="monospace" font-size="28" font-weight="700" text-anchor="middle">24:18</text>
+    <text x="190" y="172" fill="#fdba74" font-family="monospace" font-size="11" text-anchor="middle">FOCUS CYCLE 3 / 4</text>
+    <rect x="130" y="225" width="120" height="36" rx="8" fill="url(#su-orange)"/>
+    <text x="190" y="248" fill="#ffffff" font-family="-apple-system, sans-serif" font-weight="700" font-size="13" text-anchor="middle">PAUSE</text>
+  </g>
+  <!-- Card 2: GPA Calculator & Goals -->
+  <g transform="translate(450, 110)">
+    <rect width="380" height="280" rx="16" fill="#0f1624" stroke="#1f293d" stroke-width="1.5"/>
+    <text x="24" y="36" fill="#ffffff" font-family="-apple-system, sans-serif" font-weight="700" font-size="16">GPA &amp; Grade Predictor</text>
+    <rect x="24" y="60" width="332" height="42" rx="8" fill="#131c2e"/>
+    <text x="40" y="86" fill="#e2e8f0" font-family="-apple-system, sans-serif" font-size="13">Distributed Systems (4 Cr)</text>
+    <text x="310" y="86" fill="#34d399" font-family="monospace" font-size="14" font-weight="700">A+ (10)</text>
+    <rect x="24" y="112" width="332" height="42" rx="8" fill="#131c2e"/>
+    <text x="40" y="138" fill="#e2e8f0" font-family="-apple-system, sans-serif" font-size="13">Machine Learning (3 Cr)</text>
+    <text x="310" y="138" fill="#34d399" font-family="monospace" font-size="14" font-weight="700">A+ (10)</text>
+    <rect x="24" y="164" width="332" height="42" rx="8" fill="#131c2e"/>
+    <text x="40" y="190" fill="#e2e8f0" font-family="-apple-system, sans-serif" font-size="13">Cloud Computing (3 Cr)</text>
+    <text x="310" y="190" fill="#60a5fa" font-family="monospace" font-size="14" font-weight="700">A (9)</text>
+    <rect x="24" y="216" width="332" height="46" rx="8" fill="#064e3b" fill-opacity="0.3" stroke="#10b981" stroke-width="1"/>
+    <text x="40" y="244" fill="#6ee7b7" font-family="monospace" font-size="12" font-weight="700">Projected Semester SGPA: 9.35</text>
+  </g>
+  <!-- Card 3: Quick Notes & Formula Cheat Sheet -->
+  <g transform="translate(860, 110)">
+    <rect width="380" height="280" rx="16" fill="#0f1624" stroke="#1f293d" stroke-width="1.5"/>
+    <text x="24" y="36" fill="#ffffff" font-family="-apple-system, sans-serif" font-weight="700" font-size="16">Lecture Markdown Notes</text>
+    <rect x="24" y="60" width="332" height="195" rx="8" fill="#090d15" stroke="#1e293b" stroke-width="1"/>
+    <text x="38" y="90" fill="#f59e0b" font-family="monospace" font-size="12"># CAP Theorem</text>
+    <text x="38" y="115" fill="#cbd5e1" font-family="-apple-system, sans-serif" font-size="12">- Consistency, Availability, Partition</text>
+    <text x="38" y="135" fill="#cbd5e1" font-family="-apple-system, sans-serif" font-size="12">- Network partitions are inevitable</text>
+    <text x="38" y="165" fill="#38bdf8" font-family="monospace" font-size="12">```sql</text>
+    <text x="38" y="185" fill="#93c5fd" font-family="monospace" font-size="11">SELECT * FROM ledger WHERE bal &gt; 0;</text>
+    <text x="38" y="205" fill="#38bdf8" font-family="monospace" font-size="12">```</text>
+  </g>
+  <!-- Bottom: Task & Assignment Kanban Board -->
+  <g transform="translate(40, 410)">
+    <rect width="1200" height="270" rx="16" fill="#0f1624" stroke="#1f293d" stroke-width="1.5"/>
+    <text x="30" y="36" fill="#ffffff" font-family="-apple-system, sans-serif" font-weight="700" font-size="16">Academic Assignment Kanban</text>
+    <!-- Col 1 -->
+    <rect x="30" y="55" width="365" height="190" rx="10" fill="#090d15"/>
+    <text x="45" y="80" fill="#f87171" font-family="monospace" font-size="11" font-weight="700">● TO DO (2)</text>
+    <rect x="45" y="95" width="335" height="55" rx="8" fill="#1e293b"/>
+    <text x="60" y="120" fill="#ffffff" font-family="-apple-system, sans-serif" font-size="13">Submit AI Model Evaluation Report</text>
+    <text x="60" y="138" fill="#94a3b8" font-family="monospace" font-size="11">Due Tomorrow • High Priority</text>
+    <!-- Col 2 -->
+    <rect x="415" y="55" width="365" height="190" rx="10" fill="#090d15"/>
+    <text x="430" y="80" fill="#fbbf24" font-family="monospace" font-size="11" font-weight="700">● IN PROGRESS (1)</text>
+    <rect x="430" y="95" width="335" height="55" rx="8" fill="#1e293b"/>
+    <text x="445" y="120" fill="#ffffff" font-family="-apple-system, sans-serif" font-size="13">Prepare AWS Architect Exam Deck</text>
+    <text x="445" y="138" fill="#94a3b8" font-family="monospace" font-size="11">4 of 10 modules done</text>
+    <!-- Col 3 -->
+    <rect x="800" y="55" width="370" height="190" rx="10" fill="#090d15"/>
+    <text x="815" y="80" fill="#34d399" font-family="monospace" font-size="11" font-weight="700">● COMPLETED (5)</text>
+    <rect x="815" y="95" width="340" height="55" rx="8" fill="#1e293b"/>
+    <text x="830" y="120" fill="#ffffff" font-family="-apple-system, sans-serif" font-size="13">Database Normalization Assignment</text>
+    <text x="830" y="138" fill="#34d399" font-family="monospace" font-size="11">Grade: 100/100 ✓</text>
+  </g>
+</svg>

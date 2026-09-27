@@ -1,0 +1,78 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1280 720" width="1280" height="720">
+  <defs>
+    <linearGradient id="w-bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#08101e"/>
+      <stop offset="100%" stop-color="#040810"/>
+    </linearGradient>
+    <linearGradient id="w-cyan" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0284c7"/>
+      <stop offset="100%" stop-color="#0369a1"/>
+    </linearGradient>
+  </defs>
+  <rect width="1280" height="720" fill="url(#w-bg)"/>
+  <!-- Top bar -->
+  <rect x="40" y="30" width="1200" height="60" rx="12" fill="#0f172a" stroke="#1e293b" stroke-width="1.5"/>
+  <text x="65" y="66" fill="#ffffff" font-family="-apple-system, sans-serif" font-weight="700" font-size="18">⛅ Atmos — Hyperlocal Weather Intelligence</text>
+  <rect x="420" y="44" width="340" height="32" rx="8" fill="#1e293b"/>
+  <text x="440" y="65" fill="#94a3b8" font-family="-apple-system, sans-serif" font-size="13">🔍 Hyderabad, Telangana, IN</text>
+  <text x="1050" y="66" fill="#38bdf8" font-family="monospace" font-size="12">UPDATED: 2 MIN AGO</text>
+  <!-- Main Current Weather Big Card -->
+  <g transform="translate(40, 110)">
+    <rect width="600" height="330" rx="16" fill="url(#w-cyan)" filter="drop-shadow(0 12px 24px rgba(0,0,0,0.5))"/>
+    <text x="40" y="60" fill="#ffffff" font-family="-apple-system, sans-serif" font-weight="700" font-size="28">Hyderabad</text>
+    <text x="40" y="86" fill="#bae6fd" font-family="-apple-system, sans-serif" font-size="14">Partly Cloudy • Humidity 64% • Wind 12 km/h</text>
+    <text x="40" y="210" fill="#ffffff" font-family="-apple-system, sans-serif" font-weight="800" font-size="96">28°C</text>
+    <circle cx="480" cy="140" r="45" fill="#facc15" opacity="0.9"/>
+    <path d="M430 180 Q450 140 500 150 Q540 140 560 170 Q580 190 560 210 L430 210 Z" fill="#ffffff" opacity="0.85"/>
+    <rect x="40" y="250" width="520" height="50" rx="10" fill="#0c4a6e" fill-opacity="0.6"/>
+    <text x="60" y="280" fill="#ffffff" font-family="monospace" font-size="12">Air Quality: AQI 42 (Good) • UV Index: 4.2 • Pressure: 1012 hPa</text>
+  </g>
+  <!-- Right: 7-Day Forecast Cards -->
+  <g transform="translate(670, 110)">
+    <rect width="570" height="330" rx="16" fill="#0f172a" stroke="#1e293b" stroke-width="1.5"/>
+    <text x="30" y="40" fill="#ffffff" font-family="-apple-system, sans-serif" font-weight="700" font-size="16">7-Day Meteorological Forecast</text>
+    <g transform="translate(30, 60)">
+      <!-- Day 1 -->
+      <rect x="0" y="0" width="510" height="44" rx="8" fill="#1e293b"/>
+      <text x="20" y="27" fill="#ffffff" font-family="-apple-system, sans-serif" font-size="14" font-weight="600">Today</text>
+      <text x="180" y="27" fill="#38bdf8" font-family="-apple-system, sans-serif" font-size="13">⛅ Partly Cloudy</text>
+      <text x="430" y="27" fill="#ffffff" font-family="monospace" font-size="13" font-weight="700">28° / 21°</text>
+      <!-- Day 2 -->
+      <rect x="0" y="52" width="510" height="44" rx="8" fill="#131d2e"/>
+      <text x="20" y="79" fill="#e2e8f0" font-family="-apple-system, sans-serif" font-size="14">Saturday</text>
+      <text x="180" y="79" fill="#facc15" font-family="-apple-system, sans-serif" font-size="13">☀️ Clear Sky</text>
+      <text x="430" y="79" fill="#ffffff" font-family="monospace" font-size="13" font-weight="700">30° / 22°</text>
+      <!-- Day 3 -->
+      <rect x="0" y="104" width="510" height="44" rx="8" fill="#131d2e"/>
+      <text x="20" y="131" fill="#e2e8f0" font-family="-apple-system, sans-serif" font-size="14">Sunday</text>
+      <text x="180" y="131" fill="#60a5fa" font-family="-apple-system, sans-serif" font-size="13">🌧️ Light Rain</text>
+      <text x="430" y="131" fill="#ffffff" font-family="monospace" font-size="13" font-weight="700">26° / 20°</text>
+      <!-- Day 4 -->
+      <rect x="0" y="156" width="510" height="44" rx="8" fill="#131d2e"/>
+      <text x="20" y="183" fill="#e2e8f0" font-family="-apple-system, sans-serif" font-size="14">Monday</text>
+      <text x="180" y="183" fill="#38bdf8" font-family="-apple-system, sans-serif" font-size="13">⛅ Scattered Clouds</text>
+      <text x="430" y="183" fill="#ffffff" font-family="monospace" font-size="13" font-weight="700">29° / 21°</text>
+      <!-- Day 5 -->
+      <rect x="0" y="208" width="510" height="44" rx="8" fill="#131d2e"/>
+      <text x="20" y="235" fill="#e2e8f0" font-family="-apple-system, sans-serif" font-size="14">Tuesday</text>
+      <text x="180" y="235" fill="#facc15" font-family="-apple-system, sans-serif" font-size="13">☀️ Sunny</text>
+      <text x="430" y="235" fill="#ffffff" font-family="monospace" font-size="13" font-weight="700">31° / 23°</text>
+    </g>
+  </g>
+  <!-- Bottom: 24h Temperature Curve & Radar -->
+  <g transform="translate(40, 460)">
+    <rect width="1200" height="220" rx="16" fill="#0f172a" stroke="#1e293b" stroke-width="1.5"/>
+    <text x="30" y="36" fill="#ffffff" font-family="-apple-system, sans-serif" font-weight="700" font-size="16">24-Hour Temperature Curve (°C)</text>
+    <!-- Temperature Graph Line -->
+    <path d="M60 140 Q 200 80 400 110 T 700 70 T 1000 130 T 1140 160" fill="none" stroke="#38bdf8" stroke-width="4"/>
+    <circle cx="60" cy="140" r="5" fill="#38bdf8"/>
+    <text x="60" y="170" fill="#94a3b8" font-family="monospace" font-size="12" text-anchor="middle">00:00 (22°)</text>
+    <circle cx="400" cy="110" r="5" fill="#38bdf8"/>
+    <text x="400" y="170" fill="#94a3b8" font-family="monospace" font-size="12" text-anchor="middle">08:00 (24°)</text>
+    <circle cx="700" cy="70" r="6" fill="#facc15"/>
+    <text x="700" y="55" fill="#facc15" font-family="monospace" font-size="13" font-weight="700" text-anchor="middle">PEAK 30°</text>
+    <text x="700" y="170" fill="#94a3b8" font-family="monospace" font-size="12" text-anchor="middle">14:00 (30°)</text>
+    <circle cx="1000" cy="130" r="5" fill="#38bdf8"/>
+    <text x="1000" y="170" fill="#94a3b8" font-family="monospace" font-size="12" text-anchor="middle">20:00 (25°)</text>
+  </g>
+</svg>

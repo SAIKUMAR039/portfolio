@@ -1,0 +1,62 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1280 720" width="1280" height="720">
+  <defs>
+    <linearGradient id="bg-chat" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#090d16"/>
+      <stop offset="100%" stop-color="#05070c"/>
+    </linearGradient>
+    <linearGradient id="chat-purple" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#8b5cf6"/>
+      <stop offset="100%" stop-color="#6366f1"/>
+    </linearGradient>
+  </defs>
+  <rect width="1280" height="720" fill="url(#bg-chat)"/>
+  <!-- Sidebar -->
+  <rect x="0" y="0" width="280" height="720" fill="#0d111a" stroke="#1f293d" stroke-width="1"/>
+  <rect x="20" y="24" width="240" height="42" rx="8" fill="url(#chat-purple)"/>
+  <text x="50" y="50" fill="#ffffff" font-family="-apple-system, sans-serif" font-weight="700" font-size="14">+ New Chat</text>
+  <text x="24" y="105" fill="#64748b" font-family="monospace" font-size="11">RECENT CHATS</text>
+  <rect x="16" y="120" width="248" height="38" rx="6" fill="#1e293b"/>
+  <text x="32" y="144" fill="#ffffff" font-family="-apple-system, sans-serif" font-size="13">Architecting Next.js 14 APIs</text>
+  <rect x="16" y="165" width="248" height="38" rx="6" fill="#131926"/>
+  <text x="32" y="189" fill="#94a3b8" font-family="-apple-system, sans-serif" font-size="13">Python FastAPI vs Node Benchmarks</text>
+  <rect x="16" y="210" width="248" height="38" rx="6" fill="#131926"/>
+  <text x="32" y="234" fill="#94a3b8" font-family="-apple-system, sans-serif" font-size="13">PostgreSQL Index Optimization</text>
+  <rect x="16" y="255" width="248" height="38" rx="6" fill="#131926"/>
+  <text x="32" y="279" fill="#94a3b8" font-family="-apple-system, sans-serif" font-size="13">AWS Cloud Architect Patterns</text>
+  <!-- Main Chat Pane -->
+  <g transform="translate(280, 0)">
+    <!-- Top Nav -->
+    <rect width="1000" height="64" fill="#0b0f19" stroke="#1e293b" stroke-width="1"/>
+    <text x="32" y="38" fill="#ffffff" font-family="-apple-system, sans-serif" font-weight="700" font-size="16">Benege AI Chat Studio</text>
+    <rect x="220" y="20" width="130" height="26" rx="13" fill="#1e1b4b" stroke="#8b5cf6" stroke-width="1"/>
+    <text x="234" y="37" fill="#c4b5fd" font-family="monospace" font-size="11" font-weight="600">GPT-4o • Streaming</text>
+    <!-- Message 1: User -->
+    <rect x="40" y="90" width="920" height="70" rx="12" fill="#111827"/>
+    <circle cx="70" cy="125" r="16" fill="#4f46e5"/>
+    <text x="70" y="130" fill="#ffffff" font-family="monospace" font-size="12" font-weight="700" text-anchor="middle">YOU</text>
+    <text x="100" y="120" fill="#f8fafc" font-family="-apple-system, sans-serif" font-size="14">Explain how to implement rate limiting in Next.js middleware with Redis token bucket.</text>
+    <text x="100" y="140" fill="#64748b" font-family="monospace" font-size="11">Today at 11:24 AM</text>
+    <!-- Message 2: AI Response -->
+    <rect x="40" y="180" width="920" height="420" rx="12" fill="#0f1422" stroke="#1f293d" stroke-width="1"/>
+    <circle cx="70" cy="215" r="16" fill="url(#chat-purple)"/>
+    <text x="70" y="220" fill="#ffffff" font-family="monospace" font-size="11" font-weight="700" text-anchor="middle">AI</text>
+    <text x="100" y="212" fill="#c4b5fd" font-family="-apple-system, sans-serif" font-weight="700" font-size="14">Benege AI Assistant</text>
+    <text x="100" y="230" fill="#64748b" font-family="monospace" font-size="11">tokens: 384 • latency: 240ms</text>
+    <text x="100" y="260" fill="#e2e8f0" font-family="-apple-system, sans-serif" font-size="13">Here is a production-grade token bucket rate limiter implementation using Upstash Redis:</text>
+    <!-- Code Box -->
+    <rect x="100" y="280" width="820" height="260" rx="8" fill="#060910" stroke="#1e293b" stroke-width="1"/>
+    <text x="120" y="310" fill="#818cf8" font-family="monospace" font-size="12">// middleware.ts</text>
+    <text x="120" y="332" fill="#38bdf8" font-family="monospace" font-size="12">import { Ratelimit } from "@upstash/ratelimit";</text>
+    <text x="120" y="354" fill="#38bdf8" font-family="monospace" font-size="12">import { Redis } from "@upstash/redis";</text>
+    <text x="120" y="386" fill="#e2e8f0" font-family="monospace" font-size="12">const ratelimit = new Ratelimit({</text>
+    <text x="140" y="408" fill="#e2e8f0" font-family="monospace" font-size="12">redis: Redis.fromEnv(),</text>
+    <text x="140" y="430" fill="#4ade80" font-family="monospace" font-size="12">limiter: Ratelimit.slidingWindow(20, "10 s"),</text>
+    <text x="120" y="452" fill="#e2e8f0" font-family="monospace" font-size="12">});</text>
+    <text x="120" y="484" fill="#fbbf24" font-family="monospace" font-size="12">export async function middleware(req: NextRequest) { ... }</text>
+    <!-- Chat Input Box -->
+    <rect x="40" y="625" width="920" height="60" rx="14" fill="#131926" stroke="#2e384d" stroke-width="1.5"/>
+    <text x="65" y="660" fill="#64748b" font-family="-apple-system, sans-serif" font-size="14">Ask Benege AI anything or generate code snippets...</text>
+    <rect x="890" y="635" width="60" height="40" rx="10" fill="url(#chat-purple)"/>
+    <polygon points="915,650 928,655 915,660" fill="#ffffff"/>
+  </g>
+</svg>

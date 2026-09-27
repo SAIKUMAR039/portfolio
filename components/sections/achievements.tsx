@@ -2,87 +2,80 @@
 
 import React from "react";
 import { motion } from "framer-motion";
-import { ShieldCheck } from "lucide-react";
-import { usePortfolio } from "@/context/portfolio-context";
 
 export const AchievementsSection: React.FC = () => {
-  const { portfolioData } = usePortfolio();
-  const achievements = portfolioData.achievements || [];
-
-  const getIssuer = (msg: string) => {
-    if (msg.includes("Tata Technologies")) return "Tata Technologies";
-    if (msg.includes("AWS")) return "Amazon Web Services (AWS)";
-    if (msg.includes("ServiceNow")) return "ServiceNow / AICTE";
-    if (msg.includes("Oracle")) return "Oracle Cloud Infrastructure";
-    return "Industry Credential";
-  };
+  const certifications = [
+     {
+      title: "National Finalist — Tata Technologies InnoVent-2026",
+      issuer: "Tata Technologies",
+      year: "2026",
+    },
+    {
+      title: "AWS Certified Solutions Architect – Associate",
+      issuer: "Amazon Web Services",
+      year: "2024",
+    },
+    {
+      title: "Oracle Cloud Infrastructure 2024 Generative AI Certified Foundations",
+      issuer: "Oracle",
+      year: "2024",
+    },
+    {
+      title: "AWS Academy Graduate — Cloud Architecting",
+      issuer: "Amazon Web Services",
+      year: "2024",
+    },
+    {
+      title: "AWS Academy Graduate — Cloud Foundations",
+      issuer: "Amazon Web Services",
+      year: "2024",
+    },
+    {
+      title: "ServiceNow Developer Virtual Internship",
+      issuer: "ServiceNow & AICTE",
+      year: "2024",
+    },
+   
+  ];
 
   return (
-    <section id="certifications" className="py-28 px-6 lg:px-12 bg-[#08090d] border-t border-white/5 relative">
-      <div className="max-w-7xl mx-auto">
+    <section id="certifications" className="py-20 sm:py-24 px-6 lg:px-8 border-t border-white/[0.08] relative">
+      <div className="max-w-6xl mx-auto space-y-10">
         
         {/* Section Header */}
-        <div className="flex flex-col md:flex-row md:items-end justify-between mb-16 gap-6">
-          <div>
-            <div className="font-mono text-xs text-indigo-400 uppercase tracking-widest mb-3 flex items-center gap-2">
-              <span className="w-2 h-2 rounded-full bg-indigo-500" />
-              <span>06 — CREDENTIALS &amp; RECOGNITION</span>
-            </div>
-            <h2 className="font-sans text-4xl sm:text-5xl font-extrabold text-white tracking-tight">
-              Certifications &amp; Honors
-            </h2>
-          </div>
-          <p className="text-zinc-400 font-sans text-sm md:text-base max-w-md">
-            Validated certifications in AWS cloud architecture, Oracle Generative AI, ServiceNow engineering, and national competition awards.
+        <div className="max-w-2xl space-y-3">
+          <p className="text-xs font-semibold uppercase tracking-wider text-zinc-400">
+            Recognition
+          </p>
+          <h2 className="text-3xl sm:text-4xl font-bold text-white tracking-tight">
+            Certifications
+          </h2>
+          <p className="text-sm text-zinc-400 leading-relaxed">
+            Certifications and competitive recognition in cloud computing, generative AI, and engineering.
           </p>
         </div>
 
-        {/* Credentials Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {achievements.map((item, idx) => {
-            const cleanTitle = item.message.replace(/^LOADED\s*/, "");
-            const issuer = getIssuer(cleanTitle);
+        {/* Clean, Simple Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+          {certifications.map((item, idx) => (
+            <motion.div
+              key={idx}
+              initial={{ opacity: 0, y: 12 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.35, delay: idx * 0.04 }}
+              className="p-6 rounded-2xl border border-white/[0.08] bg-zinc-900/30 hover:border-white/15 transition-all duration-200 flex flex-col justify-between space-y-3 group"
+            >
+              <h3 className="text-sm sm:text-base font-semibold text-white tracking-tight leading-snug group-hover:text-zinc-200 transition-colors">
+                {item.title}
+              </h3>
 
-            return (
-              <motion.div
-                key={idx}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, margin: "-50px" }}
-                transition={{ duration: 0.4, delay: idx * 0.05 }}
-                className="p-8 rounded-2xl bg-[#0e0f15] border border-white/10 hover:border-indigo-500/40 transition-all duration-300 shadow-xl flex flex-col justify-between group"
-              >
-                <div className="space-y-4">
-                  {/* Category Pill Tag */}
-                  <div className="flex items-center justify-between">
-                    <span className="px-3 py-1 rounded-md bg-zinc-900 border border-white/10 font-mono text-[10px] text-indigo-300 uppercase tracking-wider">
-                      {issuer}
-                    </span>
-                    <ShieldCheck className="w-5 h-5 text-indigo-400 group-hover:scale-110 transition-transform" />
-                  </div>
-
-                  {/* Title */}
-                  <h3 className="font-sans text-lg font-bold text-white tracking-tight leading-snug group-hover:text-indigo-300 transition-colors">
-                    {cleanTitle}
-                  </h3>
-
-                  {/* Description Subtext */}
-                  <p className="font-sans text-xs text-zinc-400 leading-relaxed">
-                    {item.subtext}
-                  </p>
-                </div>
-
-                {/* Footer status */}
-                <div className="pt-6 mt-6 border-t border-white/10 flex items-center justify-between font-mono text-[10px] text-zinc-500">
-                  <span className="flex items-center gap-1.5 text-emerald-400 font-semibold">
-                    <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
-                    VERIFIED CREDENTIAL
-                  </span>
-                  <span>VALIDATED</span>
-                </div>
-              </motion.div>
-            );
-          })}
+              <div className="flex items-center justify-between text-xs text-zinc-400 pt-2 border-t border-white/[0.04]">
+                <span>{item.issuer}</span>
+                <span className="text-zinc-500">{item.year}</span>
+              </div>
+            </motion.div>
+          ))}
         </div>
 
       </div>

@@ -44,7 +44,7 @@ export interface Project {
 export interface AchievementLog {
   timestamp: string;
   service: string;
-  status: "OK" | "INFO" | "WARN";
+  status: "OK" | "INFO" | "WARN" | "Verified";
   message: string;
   subtext?: string;
 }

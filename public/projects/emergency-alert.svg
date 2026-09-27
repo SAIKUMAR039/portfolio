@@ -1,0 +1,64 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1280 720" width="1280" height="720">
+  <defs>
+    <linearGradient id="ea-bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#110d14"/>
+      <stop offset="100%" stop-color="#09070c"/>
+    </linearGradient>
+    <linearGradient id="ea-red" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#ef4444"/>
+      <stop offset="100%" stop-color="#dc2626"/>
+    </linearGradient>
+  </defs>
+  <rect width="1280" height="720" fill="url(#ea-bg)"/>
+  <!-- Top bar -->
+  <rect x="40" y="30" width="1200" height="60" rx="12" fill="#1c131d" stroke="#372134" stroke-width="1.5"/>
+  <text x="65" y="66" fill="#ffffff" font-family="-apple-system, sans-serif" font-weight="700" font-size="18">🚨 Suraksha — Smart Emergency Alert &amp; AirTag Beacon System</text>
+  <rect x="1050" y="44" width="170" height="32" rx="16" fill="url(#ea-red)"/>
+  <circle cx="1068" cy="60" r="5" fill="#ffffff"/>
+  <text x="1082" y="65" fill="#ffffff" font-family="monospace" font-size="11" font-weight="700">SOS ACTIVE MONITOR</text>
+  <!-- Main Live Map View -->
+  <g transform="translate(40, 110)">
+    <rect width="780" height="570" rx="16" fill="#0d0f17" stroke="#1f293d" stroke-width="1.5"/>
+    <!-- Simulated Map Grid Lines -->
+    <path d="M40 100 L740 100 M40 220 L740 220 M40 340 L740 340 M40 460 L740 460" stroke="#172033" stroke-width="2"/>
+    <path d="M160 40 L160 530 M320 40 L320 530 M480 40 L480 530 M640 40 L640 530" stroke="#172033" stroke-width="2"/>
+    <!-- Simulated Roads & Rivers -->
+    <path d="M60 480 Q 250 400 420 280 T 720 180" fill="none" stroke="#233554" stroke-width="14" stroke-linecap="round"/>
+    <path d="M220 520 L 400 290 L 580 80" fill="none" stroke="#1e293b" stroke-width="10"/>
+    <!-- Radar Sweep Circles from Active Beacon -->
+    <circle cx="420" cy="280" r="140" fill="#ef4444" fill-opacity="0.05" stroke="#ef4444" stroke-opacity="0.2" stroke-width="1.5"/>
+    <circle cx="420" cy="280" r="80" fill="#ef4444" fill-opacity="0.08" stroke="#ef4444" stroke-opacity="0.4" stroke-width="1.5"/>
+    <circle cx="420" cy="280" r="24" fill="#ef4444" fill-opacity="0.3"/>
+    <circle cx="420" cy="280" r="10" fill="#ef4444"/>
+    <!-- Beacon Info Tag -->
+    <rect x="440" y="240" width="220" height="70" rx="8" fill="#1e1014" stroke="#ef4444" stroke-width="1"/>
+    <text x="455" y="262" fill="#ffffff" font-family="-apple-system, sans-serif" font-weight="700" font-size="12">AirTag ID: SUR-994</text>
+    <text x="455" y="280" fill="#fda4af" font-family="monospace" font-size="11">Lat: 17.3850° N, 78.4867° E</text>
+    <text x="455" y="298" fill="#34d399" font-family="monospace" font-size="10">Battery: 92% • Accuracy: 1.2m</text>
+  </g>
+  <!-- Right Column: Emergency Status & Dispatch Info -->
+  <g transform="translate(840, 110)">
+    <rect width="400" height="570" rx="16" fill="#161219" stroke="#372134" stroke-width="1.5"/>
+    <text x="30" y="40" fill="#ffffff" font-family="-apple-system, sans-serif" font-weight="700" font-size="18">Telemetry &amp; Dispatch</text>
+    <!-- Emergency Contacts Card -->
+    <rect x="30" y="70" width="340" height="150" rx="12" fill="#24141e" stroke="#ef4444" stroke-opacity="0.4" stroke-width="1"/>
+    <text x="45" y="98" fill="#f87171" font-family="monospace" font-size="12" font-weight="700">EMERGENCY PROTOCOL: ACTIVE</text>
+    <text x="45" y="125" fill="#f1f5f9" font-family="-apple-system, sans-serif" font-size="13">Automated SMS &amp; GPS coordinates</text>
+    <text x="45" y="145" fill="#cbd5e1" font-family="-apple-system, sans-serif" font-size="12">dispatched to 3 registered guardians</text>
+    <rect x="45" y="165" width="290" height="36" rx="6" fill="#450a0a"/>
+    <text x="60" y="188" fill="#fca5a5" font-family="monospace" font-size="12" font-weight="700">POLICE &amp; AMBULANCE NOTIFIED</text>
+    <!-- Live Geofence Health -->
+    <text x="30" y="255" fill="#e2e8f0" font-family="-apple-system, sans-serif" font-weight="600" font-size="14">Geofence Safe Zones</text>
+    <rect x="30" y="275" width="340" height="60" rx="8" fill="#131722"/>
+    <text x="45" y="302" fill="#ffffff" font-family="-apple-system, sans-serif" font-size="13">University Campus Perimeter</text>
+    <text x="45" y="322" fill="#34d399" font-family="monospace" font-size="11">● Inside Geofence (Safe Zone Alpha)</text>
+    <!-- Live Telemetry Stream -->
+    <rect x="30" y="355" width="340" height="190" rx="8" fill="#0b080f" stroke="#2a1727" stroke-width="1"/>
+    <text x="45" y="380" fill="#94a3b8" font-family="monospace" font-size="11">// BLE Beacon Advertising Packets</text>
+    <text x="45" y="405" fill="#e2e8f0" font-family="monospace" font-size="11">TX Power: -59 dBm</text>
+    <text x="45" y="430" fill="#e2e8f0" font-family="monospace" font-size="11">RSSI: -64 dBm (Strong)</text>
+    <text x="45" y="455" fill="#38bdf8" font-family="monospace" font-size="11">Nearby Mesh Nodes: 7 active</text>
+    <text x="45" y="480" fill="#facc15" font-family="monospace" font-size="11">Heartbeat: Every 1.0s</text>
+    <text x="45" y="520" fill="#34d399" font-family="monospace" font-size="11">Encryption: AES-128 GCM Verified</text>
+  </g>
+</svg>

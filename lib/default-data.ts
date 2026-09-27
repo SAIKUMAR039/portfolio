@@ -4,10 +4,10 @@ import { projects } from "@/lib/projects";
 export const defaultPortfolioData: PortfolioData = {
   profile: {
     name: "Sai Kumar Thota",
-    role: "Full Stack Engineer",
-    exp: "9 months production internship",
-    superpower: "AI-assisted development",
-    status: "Open to work 🟢",
+    role: "Software Engineer",
+    exp: "Full Stack Developer Intern (9 months)",
+    superpower: "Web applications & applied AI tools",
+    status: "Available for software engineering roles",
     email: "saikumarthota2004@gmail.com",
     phone: "+91 90590 81173",
     location: "Hyderabad, India"
@@ -391,10 +391,11 @@ export const defaultPortfolioData: PortfolioData = {
       ref: "HEAD -> main, origin/main",
       themeColor: "cyan",
       details: [
-        "Engineered responsive, high-performance web components using React.js and Tailwind CSS, reducing rendering latency.",
-        "Developed robust, scalable RESTful API endpoints and server-side utilities using Node.js, Express, and FastAPI.",
-        "Integrated PostgreSQL and MongoDB databases, optimizing query execution plans and database schema normalization.",
-        "Participated in Agile sprints, collaborative code reviews, and Git flow branching management to ensure production stability."
+        "Built and maintained web application features using React.js and Tailwind CSS.",
+        "Developed backend services and REST API endpoints using Python, FastAPI, and Node.js.",
+        "Handled request data validation, database queries, and response formatting for client applications.",
+        "Integrated external services and internal APIs to support key application workflows.",
+        "Focused on writing clean, reusable, and maintainable code in a collaborative Git-based workflow."
       ]
     },
     {
@@ -408,56 +409,55 @@ export const defaultPortfolioData: PortfolioData = {
       ref: "origin/education",
       themeColor: "green",
       details: [
-        "Solid foundations in Computer Science disciplines: Data Structures, Algorithms, DBMS, Operating Systems, and OOPs.",
-        "Active member and contributor in the college developer community, organizing coding bootcamps and tech events.",
-        "Designed and delivered multiple full-stack projects, deploying on AWS and Vercel for peer and instructor testing.",
-        "Academic performance: 8.5 CGPA, maintaining excellent marks in software engineering and machine learning tracks."
+        "Solid foundation in core computer science disciplines: Data Structures, Algorithms, DBMS, Operating Systems, and OOPs.",
+        "Active contributor to campus developer events, hackathons, and technical workshops.",
+        "Built and deployed full-stack web projects and practical AI tools."
       ]
     }
   ],
   projects: projects as any,
   achievements: [
     {
-      timestamp: "09:12:45",
-      service: "innovent-2024.service",
-      status: "OK",
-      message: "LOADED National Finalist — Tata Technologies InnoVent",
-      subtext: "Selected in top teams nationwide for innovative engineering solutions and product design."
+      timestamp: "2024",
+      service: "Tata Technologies InnoVent",
+      status: "Verified",
+      message: "National Finalist — Tata Technologies InnoVent",
+      subtext: "Selected among top engineering teams nationwide for innovative product design and system engineering."
     },
     {
-      timestamp: "09:12:46",
-      service: "aws-solutions-architect.service",
-      status: "OK",
-      message: "LOADED AWS Certified Solutions Architect - Associate",
-      subtext: "Validated expertise in designing distributed, secure, and cost-effective applications on AWS."
+      timestamp: "2024",
+      service: "Amazon Web Services",
+      status: "Verified",
+      message: "AWS Certified Solutions Architect – Associate",
+      subtext: "Certified expertise in designing secure, scalable, and resilient distributed applications on AWS."
     },
     {
-      timestamp: "09:12:47",
-      service: "aws-cloud-architecting.service",
-      status: "OK",
-      message: "LOADED AWS Academy Graduate — Cloud Architecting",
-      subtext: "Completed academy curriculum covering cloud architecture, VPC design, ELB, and auto-scaling."
+      timestamp: "2024",
+      service: "Amazon Web Services",
+      status: "Verified",
+      message: "AWS Academy Graduate — Cloud Architecting",
+      subtext: "Specialized training in VPC network architecture, high availability, load balancing, and auto-scaling."
     },
     {
-      timestamp: "09:12:48",
-      service: "aws-cloud-foundations.service",
-      status: "OK",
-      message: "LOADED AWS Academy Graduate — Cloud Foundations",
-      subtext: "Fundamental training in cloud infrastructure, services, security, pricing, and support models."
+      timestamp: "2024",
+      service: "Amazon Web Services",
+      status: "Verified",
+      message: "AWS Academy Graduate — Cloud Foundations",
+      subtext: "Foundational mastery in core cloud computing infrastructure, security models, and cloud economics."
     },
     {
-      timestamp: "09:12:49",
-      service: "servicenow-internship.service",
-      status: "OK",
-      message: "LOADED ServiceNow Developer Virtual Internship",
-      subtext: "AICTE & SmartBridge internship implementing workflows, scripting, and system admin tools."
+      timestamp: "2024",
+      service: "ServiceNow & AICTE",
+      status: "Verified",
+      message: "ServiceNow Developer Virtual Internship",
+      subtext: "AICTE and SmartBridge accredited program focusing on enterprise workflow automation and system administration."
     },
     {
-      timestamp: "09:12:50",
-      service: "oracle-oci-genai.service",
-      status: "OK",
-      message: "LOADED Oracle Cloud Infrastructure Generative AI Certified foundations",
-      subtext: "Credentials in deploying Large Language Models, prompt tuning, and RAG architectures."
+      timestamp: "2024",
+      service: "Oracle Cloud Infrastructure",
+      status: "Verified",
+      message: "Oracle Cloud Infrastructure Generative AI Certified Foundations",
+      subtext: "Validated proficiency in deploying large language models, prompt engineering, and retrieval-augmented architectures."
     }
   ]
 };

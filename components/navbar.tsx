@@ -2,146 +2,204 @@
 
 import React, { useState, useEffect } from "react";
 import Link from "next/link";
-import { motion, AnimatePresence } from "framer-motion";
-import { Menu, X, ArrowUpRight, Code2 } from "lucide-react";
+import { usePathname } from "next/navigation";
+import { motion } from "framer-motion";
+
+interface NavItem {
+  id: string;
+  label: string;
+  isRoute?: boolean;
+  href?: string;
+}
 
 export function Navbar(): React.ReactElement | null {
-  const [scrolled, setScrolled] = useState(false);
-  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const [mounted, setMounted] = useState(false);
+  const pathname = usePathname();
+  const isMarketingPage = pathname === "/marketing";
+  const [activeSection, setActiveSection] = useState<string>("");
+  const [mounted, setMounted] = useState<boolean>(false);
+
+  const navItems: NavItem[] = [
+    { id: "about", label: "About" },
+    { id: "work", label: "Work" },
+    { id: "skills", label: "Skills" },
+    { id: "experience", label: "Experience" },
+    { id: "contact", label: "Contact" },
+    { id: "marketing", label: "Marketing", isRoute: true, href: "/marketing" },
+  ];
 
   useEffect(() => {
     setMounted(true);
+
+    if (isMarketingPage) {
+      setActiveSection("marketing");
+      return;
+    }
+
     const handleScroll = () => {
-      setScrolled(window.scrollY > 30);
+      // If user reaches the bottom of the page, highlight Contact
+      const isAtBottom =
+        window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 100;
+
+      if (isAtBottom) {
+        setActiveSection("contact");
+        return;
+      }
+
+      // Check section offsets
+      const sectionIds = ["about", "work", "skills", "experience", "contact"];
+      let currentSection = "";
+
+      for (const id of sectionIds) {
+        const el = document.getElementById(id);
+        if (el) {
+          const top = el.offsetTop - 140;
+          const height = el.offsetHeight;
+          if (window.scrollY >= top && window.scrollY < top + height) {
+            currentSection = id;
+            break;
+          }
+        }
+      }
+
+      // If scrolled to top hero area
+      if (window.scrollY < 200) {
+        currentSection = "";
+      }
+
+      setActiveSection(currentSection);
     };
 
     window.addEventListener("scroll", handleScroll, { passive: true });
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
+    handleScroll();
 
-  const navItems = [
-    { label: "WORK", href: "#projects" },
-    { label: "CAPABILITIES", href: "#capabilities" },
-    { label: "STACK", href: "#stack" },
-    { label: "JOURNEY", href: "#journey" },
-    { label: "CREDENTIALS", href: "#certifications" },
-    { label: "ABOUT", href: "#about" },
-  ];
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, [isMarketingPage]);
+
+  const scrollToSection = (id: string) => {
+    setActiveSection(id);
+    const element = document.getElementById(id);
+    if (element) {
+      element.scrollIntoView({ behavior: "smooth" });
+    }
+  };
+
+  const scrollToTop = () => {
+    setActiveSection("");
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  };
 
   if (!mounted) {
     return null;
   }
 
   return (
-    <header
-      className={`fixed top-0 w-full z-50 transition-all duration-300 ${
-        scrolled
-          ? "bg-[#08090d]/95 border-b border-white/10 shadow-xl py-3.5"
-          : "bg-transparent border-b border-white/5 py-5"
-      }`}
+    <nav
+      aria-label="Floating Navigation Bar"
+      className="fixed bottom-6 left-1/2 -translate-x-1/2 z-50 max-w-[calc(100vw-2rem)] select-none"
     >
-      <div className="w-full max-w-7xl mx-auto flex items-center justify-between px-6 lg:px-12">
-        {/* Brand Identification */}
-        <Link 
-          href="/" 
-          className="group flex items-center gap-3 select-none"
-        >
-          <div className="w-9 h-9 rounded-lg bg-indigo-600/20 border border-indigo-500/40 flex items-center justify-center text-indigo-400 group-hover:bg-indigo-600 group-hover:text-white transition-all duration-300">
-            <Code2 className="w-5 h-5" />
-          </div>
-          <div className="flex flex-col">
-            <span className="font-sans text-base font-extrabold tracking-tight text-white group-hover:text-indigo-300 transition-colors">
-              SAI KUMAR THOTA
-            </span>
-            <span className="font-mono text-[10px] tracking-wider text-zinc-400 uppercase">
-              Full Stack Engineer
-            </span>
-          </div>
-          <span className="hidden sm:inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-emerald-950/80 border border-emerald-500/30 text-[10px] font-mono text-emerald-400">
-            <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
-            AVAILABLE
-          </span>
-        </Link>
-        
-        {/* Desktop Navigation */}
-        <nav className="hidden lg:flex items-center gap-7 font-mono text-xs tracking-wider">
-          {navItems.map((item) => (
-            <Link
-              key={item.href}
-              href={item.href}
-              className="text-zinc-400 hover:text-white transition-colors relative py-1 group"
-            >
-              {item.label}
-              <span className="absolute bottom-0 left-0 w-full h-[2px] bg-indigo-500 transform scale-x-0 origin-left transition-transform duration-200 group-hover:scale-x-100" />
-            </Link>
-          ))}
-        </nav>
-
-        {/* Contact Action Button */}
-        <div className="hidden lg:flex items-center">
+      <div className="flex items-center gap-1 sm:gap-1.5 p-1.5 rounded-full bg-zinc-950/85 backdrop-blur-2xl border border-white/[0.12] shadow-2xl shadow-black/80 ring-1 ring-white/[0.06]">
+        {/* Brand: SAI */}
+        {isMarketingPage ? (
           <Link
-            href="#contact"
-            className="px-4 py-2 rounded-lg bg-indigo-600 hover:bg-indigo-500 text-white font-sans font-bold text-xs tracking-wider transition-all duration-200 flex items-center gap-1.5 group shadow-md shadow-indigo-600/20"
+            href="/"
+            className="relative px-3 sm:px-3.5 py-1.5 text-xs font-bold tracking-wider uppercase rounded-full text-white hover:text-zinc-200 transition-colors"
+            aria-label="Back to home"
           >
-            <span>LET'S CONNECT</span>
-            <ArrowUpRight className="w-3.5 h-3.5 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
+            <span>SAI</span>
           </Link>
-        </div>
-          
-        {/* Mobile Toggle Button */}
-        <button
-          className="lg:hidden p-2 text-zinc-300 hover:text-white focus:outline-none"
-          onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-          aria-label="Toggle navigation menu"
-        >
-          {mobileMenuOpen ? <X className="w-6 h-6 text-white" /> : <Menu className="w-6 h-6 text-zinc-300" />}
-        </button>
-      </div>
-
-      {/* Mobile Menu */}
-      <AnimatePresence>
-        {mobileMenuOpen && (
-          <motion.div
-            initial={{ opacity: 0, height: 0 }}
-            animate={{ opacity: 1, height: "auto" }}
-            exit={{ opacity: 0, height: 0 }}
-            transition={{ duration: 0.2 }}
-            className="lg:hidden bg-[#08090d] border-b border-white/10 overflow-hidden"
+        ) : (
+          <button
+            onClick={scrollToTop}
+            className={`relative px-3 sm:px-3.5 py-1.5 text-xs font-bold tracking-wider uppercase rounded-full transition-colors ${
+              activeSection === ""
+                ? "text-black font-extrabold"
+                : "text-white hover:text-zinc-200"
+            }`}
+            aria-label="Scroll to top"
           >
-            <div className="w-full px-6 py-6 flex flex-col gap-4 font-mono text-sm">
-              <div className="pb-3 border-b border-white/5 flex items-center justify-between text-xs text-zinc-400">
-                <span>NAVIGATION MENU</span>
-                <span className="text-emerald-400 flex items-center gap-1">
-                  <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
-                  AVAILABLE
-                </span>
-              </div>
-              {navItems.map((item) => (
+            {activeSection === "" && (
+              <motion.div
+                layoutId="activeSectionPill"
+                className="absolute inset-0 bg-white rounded-full -z-10 shadow-sm"
+                transition={{ type: "spring", stiffness: 400, damping: 32 }}
+              />
+            )}
+            <span>SAI</span>
+          </button>
+        )}
+
+        {/* Divider */}
+        <div className="w-px h-4 bg-white/15 my-auto mx-0.5" />
+
+        {/* Navigation Section Items */}
+        <div className="flex items-center gap-1 overflow-x-auto no-scrollbar">
+          {navItems.map((item) => {
+            const isActive = isMarketingPage
+              ? item.id === "marketing"
+              : activeSection === item.id;
+
+            // Route item (Marketing)
+            if (item.isRoute) {
+              return (
                 <Link
-                  key={item.href}
-                  href={item.href}
-                  className="text-zinc-300 hover:text-white font-medium py-1 transition-colors flex items-center justify-between"
-                  onClick={() => setMobileMenuOpen(false)}
+                  key={item.id}
+                  href={item.href || "/marketing"}
+                  className={`relative px-3 sm:px-3.5 py-1.5 text-xs font-medium rounded-full transition-colors whitespace-nowrap ${
+                    isActive
+                      ? "text-black font-semibold"
+                      : "text-zinc-400 hover:text-white"
+                  }`}
+                >
+                  {isActive && (
+                    <motion.div
+                      layoutId="activeSectionPill"
+                      className="absolute inset-0 bg-white rounded-full -z-10 shadow-sm"
+                      transition={{ type: "spring", stiffness: 400, damping: 32 }}
+                    />
+                  )}
+                  <span>{item.label}</span>
+                </Link>
+              );
+            }
+
+            // If we are on marketing page, anchor links must point to /#section
+            if (isMarketingPage) {
+              return (
+                <Link
+                  key={item.id}
+                  href={`/#${item.id}`}
+                  className="relative px-3 sm:px-3.5 py-1.5 text-xs font-medium rounded-full text-zinc-400 hover:text-white transition-colors whitespace-nowrap"
                 >
                   <span>{item.label}</span>
-                  <ArrowUpRight className="w-4 h-4 text-zinc-600" />
                 </Link>
-              ))}
-              <div className="pt-3 border-t border-white/10 mt-2">
-                <Link
-                  href="#contact"
-                  className="w-full py-3 rounded-lg bg-indigo-600 hover:bg-indigo-500 text-white font-sans font-bold text-xs tracking-wider text-center block transition-colors shadow-md"
-                  onClick={() => setMobileMenuOpen(false)}
-                >
-                  START A CONVERSATION →
-                </Link>
-              </div>
-            </div>
-          </motion.div>
-        )}
-      </AnimatePresence>
-    </header>
+              );
+            }
+
+            // Normal section button on homepage
+            return (
+              <button
+                key={item.id}
+                onClick={() => scrollToSection(item.id)}
+                className={`relative px-3 sm:px-3.5 py-1.5 text-xs font-medium rounded-full transition-colors whitespace-nowrap ${
+                  isActive
+                    ? "text-black font-semibold"
+                    : "text-zinc-400 hover:text-white"
+                }`}
+              >
+                {isActive && (
+                  <motion.div
+                    layoutId="activeSectionPill"
+                    className="absolute inset-0 bg-white rounded-full -z-10 shadow-sm"
+                    transition={{ type: "spring", stiffness: 400, damping: 32 }}
+                  />
+                )}
+                <span>{item.label}</span>
+              </button>
+            );
+          })}
+        </div>
+      </div>
+    </nav>
   );
 }
 

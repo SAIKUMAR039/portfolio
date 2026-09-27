@@ -1,0 +1,183 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1280 720" width="1280" height="720">
+  <defs>
+    <linearGradient id="bg-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#080b11"/>
+      <stop offset="50%" stop-color="#0d131f"/>
+      <stop offset="100%" stop-color="#06090e"/>
+    </linearGradient>
+    <linearGradient id="wa-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#25D366"/>
+      <stop offset="100%" stop-color="#128C7E"/>
+    </linearGradient>
+    <linearGradient id="card-grad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#151b28" stop-opacity="0.9"/>
+      <stop offset="100%" stop-color="#0f141e" stop-opacity="0.9"/>
+    </linearGradient>
+    <linearGradient id="cyan-glow" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#25D366" stop-opacity="0.3"/>
+      <stop offset="100%" stop-color="#0ea5e9" stop-opacity="0.1"/>
+    </linearGradient>
+    <filter id="glow" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="12" result="blur"/>
+      <feComposite in="SourceGraphic" in2="blur" operator="over"/>
+    </filter>
+    <filter id="shadow" x="-5%" y="-5%" width="110%" height="110%">
+      <feDropShadow dx="0" dy="12" stdDeviation="16" flood-color="#000000" flood-opacity="0.6"/>
+    </filter>
+  </defs>
+
+  <!-- Background -->
+  <rect width="1280" height="720" fill="url(#bg-grad)"/>
+
+  <!-- Ambient Glow Orbs -->
+  <circle cx="200" cy="180" r="180" fill="#25D366" opacity="0.08" filter="url(#glow)"/>
+  <circle cx="1080" cy="520" r="220" fill="#0ea5e9" opacity="0.07" filter="url(#glow)"/>
+
+  <!-- Top App Navigation Bar -->
+  <rect x="40" y="32" width="1200" height="64" rx="14" fill="#111622" stroke="#1f293d" stroke-width="1.5" filter="url(#shadow)"/>
+  
+  <!-- Logo / Brand -->
+  <rect x="64" y="48" width="32" height="32" rx="8" fill="url(#wa-grad)"/>
+  <path d="M74 58a6 6 0 0 1 10.5 4.5c0 1.2-.4 2.3-1.1 3.2l.6 2.3-2.4-.6c-.8.5-1.8.8-2.6.8a6 6 0 0 1-5-10.2z" fill="#ffffff"/>
+  
+  <text x="110" y="69" fill="#ffffff" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-weight="700" font-size="16" letter-spacing="-0.3">WhatsApp Appointment Engine</text>
+  <rect x="360" y="52" width="110" height="24" rx="12" fill="#1a2e26" stroke="#25D366" stroke-opacity="0.3" stroke-width="1"/>
+  <circle cx="372" cy="64" r="4" fill="#25D366"/>
+  <text x="384" y="68" fill="#4ade80" font-family="monospace" font-size="11" font-weight="600">LIVE SYNC</text>
+
+  <!-- Nav Stats -->
+  <text x="960" y="69" fill="#94a3b8" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="13">Confirmed Today: <tspan fill="#ffffff" font-weight="700">38</tspan></text>
+  <rect x="1110" y="48" width="108" height="32" rx="8" fill="url(#wa-grad)"/>
+  <text x="1132" y="69" fill="#ffffff" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-weight="600" font-size="12">+ New Slot</text>
+
+  <!-- Main Content Grid -->
+  <!-- Left Column: Calendar & Slot Picker -->
+  <g transform="translate(40, 116)">
+    <rect width="380" height="572" rx="16" fill="url(#card-grad)" stroke="#1f293d" stroke-width="1.5" filter="url(#shadow)"/>
+    
+    <text x="24" y="38" fill="#ffffff" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-weight="700" font-size="18">Select Date &amp; Time</text>
+    <text x="24" y="58" fill="#64748b" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="12">Instant calendar synchronization</text>
+
+    <!-- Mini Month Navigator -->
+    <rect x="24" y="80" width="332" height="42" rx="10" fill="#0d121c" stroke="#1e293b" stroke-width="1"/>
+    <text x="44" y="106" fill="#f8fafc" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-weight="600" font-size="14">September 2026</text>
+    <text x="320" y="106" fill="#94a3b8" font-family="monospace" font-size="14">&lt;  &gt;</text>
+
+    <!-- Calendar Grid Headers -->
+    <g transform="translate(24, 140)" fill="#64748b" font-family="monospace" font-size="11" text-anchor="middle">
+      <text x="24" y="0">MO</text><text x="71" y="0">TU</text><text x="118" y="0">WE</text>
+      <text x="165" y="0">TH</text><text x="212" y="0">FR</text><text x="259" y="0">SA</text><text x="306" y="0">SU</text>
+    </g>
+
+    <!-- Calendar Days -->
+    <g transform="translate(24, 158)" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="12" text-anchor="middle">
+      <rect x="144" y="32" width="42" height="34" rx="8" fill="#25D366" fill-opacity="0.2" stroke="#25D366" stroke-width="1.5"/>
+      <text x="165" y="54" fill="#ffffff" font-weight="700">25</text>
+      
+      <!-- Other days -->
+      <text x="24" y="18" fill="#475569">21</text><text x="71" y="18" fill="#475569">22</text><text x="118" y="18" fill="#94a3b8">23</text>
+      <text x="165" y="18" fill="#94a3b8">24</text><text x="212" y="18" fill="#94a3b8">25</text><text x="259" y="18" fill="#94a3b8">26</text><text x="306" y="18" fill="#475569">27</text>
+
+      <text x="24" y="54" fill="#94a3b8">28</text><text x="71" y="54" fill="#94a3b8">29</text><text x="118" y="54" fill="#94a3b8">30</text>
+      <text x="212" y="54" fill="#94a3b8">26</text><text x="259" y="54" fill="#94a3b8">27</text><text x="306" y="54" fill="#475569">28</text>
+    </g>
+
+    <!-- Available Slots Header -->
+    <text x="24" y="278" fill="#e2e8f0" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-weight="600" font-size="14">Available Slots (Fri, Sep 25)</text>
+
+    <!-- Slot Buttons -->
+    <g transform="translate(24, 298)">
+      <rect x="0" y="0" width="158" height="42" rx="8" fill="#111827" stroke="#25D366" stroke-width="1.5"/>
+      <circle cx="20" cy="21" r="4" fill="#25D366"/>
+      <text x="34" y="26" fill="#ffffff" font-family="monospace" font-size="12" font-weight="600">10:00 AM - 10:30 AM</text>
+
+      <rect x="174" y="0" width="158" height="42" rx="8" fill="#0d121c" stroke="#1f293d" stroke-width="1"/>
+      <circle cx="194" cy="21" r="4" fill="#10b981"/>
+      <text x="208" y="26" fill="#94a3b8" font-family="monospace" font-size="12">11:15 AM - 11:45 AM</text>
+
+      <rect x="0" y="54" width="158" height="42" rx="8" fill="#0d121c" stroke="#1f293d" stroke-width="1"/>
+      <circle cx="20" cy="75" r="4" fill="#10b981"/>
+      <text x="34" y="80" fill="#94a3b8" font-family="monospace" font-size="12">02:00 PM - 02:30 PM</text>
+
+      <rect x="174" y="54" width="158" height="42" rx="8" fill="#0d121c" stroke="#1f293d" stroke-width="1"/>
+      <circle cx="194" cy="75" r="4" fill="#10b981"/>
+      <text x="208" y="80" fill="#94a3b8" font-family="monospace" font-size="12">04:30 PM - 05:00 PM</text>
+    </g>
+
+    <!-- WhatsApp Channel Direct Confirmation Notice -->
+    <rect x="24" y="420" width="332" height="124" rx="12" fill="#0c1716" stroke="#25D366" stroke-opacity="0.3" stroke-width="1"/>
+    <text x="44" y="450" fill="#25D366" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-weight="700" font-size="14">Automated WhatsApp Reminders</text>
+    <text x="44" y="474" fill="#94a3b8" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="12">Clients receive instant template messages,</text>
+    <text x="44" y="492" fill="#94a3b8" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="12">one-click cancellation, and reminder pings.</text>
+    <rect x="44" y="508" width="140" height="22" rx="4" fill="#163828"/>
+    <text x="54" y="523" fill="#86efac" font-family="monospace" font-size="10">99.4% DELIVERY RATE</text>
+  </g>
+
+  <!-- Middle & Right Columns: Real-Time Appointments & Chat Simulation -->
+  <g transform="translate(444, 116)">
+    <!-- Dashboard Status Metrics Row -->
+    <g>
+      <rect x="0" y="0" width="248" height="96" rx="14" fill="url(#card-grad)" stroke="#1f293d" stroke-width="1.5" filter="url(#shadow)"/>
+      <text x="24" y="32" fill="#64748b" font-family="monospace" font-size="11" font-weight="600">TOTAL BOOKINGS</text>
+      <text x="24" y="68" fill="#ffffff" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="32" font-weight="800">1,248</text>
+      <rect x="160" y="24" width="64" height="24" rx="12" fill="#14532d"/>
+      <text x="174" y="40" fill="#86efac" font-family="monospace" font-size="11" font-weight="700">+18.4%</text>
+
+      <rect x="272" y="0" width="248" height="96" rx="14" fill="url(#card-grad)" stroke="#1f293d" stroke-width="1.5" filter="url(#shadow)"/>
+      <text x="296" y="32" fill="#64748b" font-family="monospace" font-size="11" font-weight="600">ATTENDANCE RATE</text>
+      <text x="296" y="68" fill="#25D366" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="32" font-weight="800">97.2%</text>
+      <rect x="432" y="24" width="64" height="24" rx="12" fill="#14532d"/>
+      <text x="446" y="40" fill="#86efac" font-family="monospace" font-size="11" font-weight="700">OPTIMAL</text>
+
+      <rect x="544" y="0" width="252" height="96" rx="14" fill="url(#card-grad)" stroke="#1f293d" stroke-width="1.5" filter="url(#shadow)"/>
+      <text x="568" y="32" fill="#64748b" font-family="monospace" font-size="11" font-weight="600">AVG RESPONSE TIME</text>
+      <text x="568" y="68" fill="#38bdf8" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="32" font-weight="800">1.8s</text>
+      <rect x="716" y="24" width="56" height="24" rx="12" fill="#075985"/>
+      <text x="728" y="40" fill="#7dd3fc" font-family="monospace" font-size="11" font-weight="700">REALTIME</text>
+    </g>
+
+    <!-- Live WhatsApp Chat Simulator Window -->
+    <g transform="translate(0, 120)">
+      <rect width="796" height="452" rx="16" fill="#0a0f18" stroke="#1f293d" stroke-width="1.5" filter="url(#shadow)"/>
+      
+      <!-- Chat Header -->
+      <rect width="796" height="60" rx="16" fill="#121824"/>
+      <circle cx="36" cy="30" r="18" fill="url(#wa-grad)"/>
+      <text x="36" y="35" fill="#ffffff" font-family="-apple-system, sans-serif" font-weight="700" font-size="14" text-anchor="middle">WA</text>
+      <text x="68" y="28" fill="#ffffff" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-weight="700" font-size="14">WhatsApp Appointment Assistant</text>
+      <text x="68" y="45" fill="#25D366" font-family="monospace" font-size="11">● Active Bot Automation • Next.js &amp; Meta Cloud API</text>
+
+      <!-- Chat Bubbles -->
+      <!-- Message 1 from user -->
+      <rect x="470" y="80" width="300" height="48" rx="12" fill="#134e4a"/>
+      <text x="486" y="102" fill="#ffffff" font-family="-apple-system, sans-serif" font-size="13">Hi, I'd like to book a consultation</text>
+      <text x="486" y="118" fill="#99f6e4" font-family="-apple-system, sans-serif" font-size="11">for Friday at 10:00 AM.</text>
+      <text x="736" y="120" fill="#5eead4" font-family="monospace" font-size="10">09:41 ✓✓</text>
+
+      <!-- Message 2 from Bot -->
+      <rect x="24" y="148" width="460" height="154" rx="14" fill="#15202e" stroke="#1f293d" stroke-width="1"/>
+      <text x="44" y="174" fill="#25D366" font-family="-apple-system, sans-serif" font-weight="700" font-size="13">APPOINTMENT CONFIRMED #APT-8821</text>
+      
+      <text x="44" y="200" fill="#f1f5f9" font-family="-apple-system, sans-serif" font-size="13">📅 Date: <tspan font-weight="700">Friday, September 25, 2026</tspan></text>
+      <text x="44" y="222" fill="#f1f5f9" font-family="-apple-system, sans-serif" font-size="13">⏰ Time: <tspan font-weight="700">10:00 AM - 10:30 AM IST</tspan></text>
+      <text x="44" y="244" fill="#f1f5f9" font-family="-apple-system, sans-serif" font-size="13">📍 Mode: <tspan font-weight="700">Google Meet Video Conference</tspan></text>
+      
+      <rect x="44" y="260" width="180" height="28" rx="6" fill="#25D366"/>
+      <text x="72" y="278" fill="#062514" font-family="-apple-system, sans-serif" font-weight="700" font-size="12">Add to Google Calendar</text>
+
+      <rect x="236" y="260" width="130" height="28" rx="6" fill="#1e293b"/>
+      <text x="256" y="278" fill="#94a3b8" font-family="-apple-system, sans-serif" font-weight="600" font-size="12">Reschedule</text>
+
+      <!-- Message 3 from Bot: Live notification -->
+      <rect x="24" y="320" width="460" height="60" rx="12" fill="#101c2a" stroke="#25D366" stroke-opacity="0.3" stroke-width="1"/>
+      <text x="44" y="345" fill="#f8fafc" font-family="-apple-system, sans-serif" font-size="12">🔔 A calendar invite and reminder has been sent</text>
+      <text x="44" y="363" fill="#64748b" font-family="-apple-system, sans-serif" font-size="11">via WhatsApp (+91 90590 *****) with 1-click directions.</text>
+
+      <!-- Bottom Input Simulation -->
+      <rect x="24" y="396" width="670" height="42" rx="10" fill="#111827" stroke="#1e293b" stroke-width="1"/>
+      <text x="44" y="422" fill="#475569" font-family="-apple-system, sans-serif" font-size="13">Type your reply or choose an option...</text>
+      <circle cx="754" cy="417" r="18" fill="url(#wa-grad)"/>
+      <polygon points="750,410 762,417 750,424" fill="#ffffff"/>
+    </g>
+  </g>
+</svg>
