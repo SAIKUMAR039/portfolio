@@ -12,7 +12,7 @@ export const Footer = () => {
   };
 
   return (
-    <footer className="border-t border-white/[0.08] pt-12 pb-24 sm:pb-28 px-6 lg:px-8 text-zinc-500 text-xs">
+    <footer className="border-t border-white/[0.08] pt-12 pb-32 sm:pb-28 px-6 lg:px-8 text-zinc-500 text-xs">
       <div className="max-w-6xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-6">
         
         {/* Left: Attribution */}

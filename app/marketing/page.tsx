@@ -12,7 +12,7 @@ export const metadata: Metadata = {
     title: "Digital Marketing at SKIZEN | Sai Kumar Thota",
     description:
       "Experience as Director at SKIZEN: client acquisition, direct pitching, Meta & Google Ads, content strategy, and business website development.",
-    url: "https://saikumarthota.live/marketing",
+    url: "https://saikumarthota.site/marketing",
     siteName: "Sai Kumar Thota",
     locale: "en_IN",
     type: "article",

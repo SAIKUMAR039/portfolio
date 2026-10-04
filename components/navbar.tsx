@@ -18,13 +18,22 @@ export function Navbar(): React.ReactElement | null {
   const [activeSection, setActiveSection] = useState<string>("");
   const [mounted, setMounted] = useState<boolean>(false);
 
-  const navItems: NavItem[] = [
+  // Desktop items: unchanged
+  const desktopNavItems: NavItem[] = [
     { id: "work", label: "Work" },
     { id: "skills", label: "Skills" },
     { id: "experience", label: "Experience" },
     { id: "innovent", label: "Honors" },
     { id: "contact", label: "Contact" },
     { id: "marketing", label: "Marketing", isRoute: true, href: "/marketing" },
+  ];
+
+  // Mobile items: exactly 4 items (Home/SAI, Work, Skills, Experience)
+  const mobileNavItems = [
+    { id: "home", label: "SAI", sectionId: "" },
+    { id: "work", label: "Work", sectionId: "work" },
+    { id: "skills", label: "Skills", sectionId: "skills" },
+    { id: "experience", label: "Experience", sectionId: "experience" },
   ];
 
   useEffect(() => {
@@ -42,7 +51,6 @@ export function Navbar(): React.ReactElement | null {
     }
 
     const handleScroll = () => {
-      // If user reaches the bottom of the page, highlight Contact
       const isAtBottom =
         window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 100;
 
@@ -101,9 +109,68 @@ export function Navbar(): React.ReactElement | null {
   return (
     <nav
       aria-label="Floating Navigation Bar"
-      className="fixed bottom-6 left-1/2 -translate-x-1/2 z-50 max-w-[calc(100vw-2rem)] select-none"
+      className="fixed left-1/2 -translate-x-1/2 z-50 select-none bottom-dock-safe w-[calc(100%-1.25rem)] min-[360px]:w-[calc(100%-2rem)] max-w-[360px] md:w-auto md:max-w-[calc(100vw-2rem)]"
     >
-      <div className="flex items-center gap-1 sm:gap-1.5 p-1.5 rounded-full bg-zinc-950/85 backdrop-blur-2xl border border-white/[0.12] shadow-2xl shadow-black/80 ring-1 ring-white/[0.06]">
+      {/* MOBILE FLOATING DOCK (< 768px): Compact, 4 evenly distributed items */}
+      <div className="flex md:hidden items-center justify-between w-full h-[52px] px-1 py-1 rounded-full bg-zinc-950/90 backdrop-blur-2xl border border-white/[0.12] shadow-2xl shadow-black/90 ring-1 ring-white/[0.06]">
+        <div className="grid grid-cols-4 w-full h-full items-center gap-1">
+          {mobileNavItems.map((item) => {
+            const isItemActive =
+              item.id === "home"
+                ? activeSection === ""
+                : activeSection === item.sectionId;
+
+            if (!isHome) {
+              const href = item.id === "home" ? "/" : `/#${item.sectionId}`;
+              return (
+                <Link
+                  key={item.id}
+                  href={href}
+                  className={`relative flex items-center justify-center h-full min-h-[44px] px-1.5 rounded-full text-[11px] min-[360px]:text-xs font-medium transition-colors ${
+                    isItemActive
+                      ? "text-black font-semibold"
+                      : "text-zinc-400 hover:text-white"
+                  }`}
+                >
+                  {isItemActive && (
+                    <motion.div
+                      layoutId="activeSectionPillMobile"
+                      className="absolute inset-0 bg-white rounded-full -z-10 shadow-sm"
+                      transition={{ type: "spring", stiffness: 400, damping: 32 }}
+                    />
+                  )}
+                  <span className="truncate">{item.label}</span>
+                </Link>
+              );
+            }
+
+            return (
+              <button
+                key={item.id}
+                onClick={item.id === "home" ? scrollToTop : () => scrollToSection(item.sectionId)}
+                className={`relative flex items-center justify-center h-full min-h-[44px] px-1.5 rounded-full text-[11px] min-[360px]:text-xs font-medium transition-colors ${
+                  isItemActive
+                    ? "text-black font-semibold"
+                    : "text-zinc-400 hover:text-white"
+                }`}
+                aria-label={`Navigate to ${item.label}`}
+              >
+                {isItemActive && (
+                  <motion.div
+                    layoutId="activeSectionPillMobile"
+                    className="absolute inset-0 bg-white rounded-full -z-10 shadow-sm"
+                    transition={{ type: "spring", stiffness: 400, damping: 32 }}
+                  />
+                )}
+                <span className="truncate">{item.label}</span>
+              </button>
+            );
+          })}
+        </div>
+      </div>
+
+      {/* DESKTOP NAVIGATION (>= 768px): Exactly UNCHANGED */}
+      <div className="hidden md:flex items-center gap-1 sm:gap-1.5 p-1.5 rounded-full bg-zinc-950/85 backdrop-blur-2xl border border-white/[0.12] shadow-2xl shadow-black/80 ring-1 ring-white/[0.06]">
         {/* Brand: SAI */}
         {!isHome ? (
           <Link
@@ -125,7 +192,7 @@ export function Navbar(): React.ReactElement | null {
           >
             {activeSection === "" && (
               <motion.div
-                layoutId="activeSectionPill"
+                layoutId="activeSectionPillDesktop"
                 className="absolute inset-0 bg-white rounded-full -z-10 shadow-sm"
                 transition={{ type: "spring", stiffness: 400, damping: 32 }}
               />
@@ -139,7 +206,7 @@ export function Navbar(): React.ReactElement | null {
 
         {/* Navigation Section Items */}
         <div className="flex items-center gap-1 overflow-x-auto no-scrollbar">
-          {navItems.map((item) => {
+          {desktopNavItems.map((item) => {
             const isActive = activeSection === item.id;
 
             // Route item (Marketing)
@@ -156,7 +223,7 @@ export function Navbar(): React.ReactElement | null {
                 >
                   {isActive && (
                     <motion.div
-                      layoutId="activeSectionPill"
+                      layoutId="activeSectionPillDesktop"
                       className="absolute inset-0 bg-white rounded-full -z-10 shadow-sm"
                       transition={{ type: "spring", stiffness: 400, damping: 32 }}
                     />
@@ -192,7 +259,7 @@ export function Navbar(): React.ReactElement | null {
               >
                 {isActive && (
                   <motion.div
-                    layoutId="activeSectionPill"
+                    layoutId="activeSectionPillDesktop"
                     className="absolute inset-0 bg-white rounded-full -z-10 shadow-sm"
                     transition={{ type: "spring", stiffness: 400, damping: 32 }}
                   />
