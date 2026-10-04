@@ -15,33 +15,31 @@ const jetbrainsMono = JetBrains_Mono({
   variable: "--font-mono",
 });
 
-const siteUrl = "https://saikumarthota.live";
+const siteUrl = "https://saikumarthota.site";
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
   title: {
-    default: "Sai Kumar Thota — Software Engineer",
+    default: "Sai Kumar Thota | Software Engineer | Python React Node.js",
     template: "%s | Sai Kumar Thota",
   },
   description:
-    "Software engineer building thoughtful web applications and practical AI-powered tools. Experienced in React, Next.js, Python, FastAPI, and cloud deployments. Based in Hyderabad, India.",
+    "Sai Kumar Thota is a 2026 Computer Science graduate from SR University building software applications, REST APIs and practical AI systems using Python, React.js, Node.js, FastAPI and SQL.",
   applicationName: "Sai Kumar Thota Portfolio",
   keywords: [
     "Sai Kumar Thota",
     "Software Engineer",
-    "Full Stack Developer",
-    "Web Developer Hyderabad",
-    "React Developer",
-    "Next.js Developer",
     "Python Developer",
+    "React.js Developer",
+    "Node.js Developer",
     "FastAPI",
-    "TypeScript",
-    "Applied AI",
-    "Hyderabad Software Engineer",
-    "Telangana Software Engineer",
-    "India Software Engineer",
-    "SKIZEN",
-    "Digital Marketing",
+    "SQL",
+    "REST APIs",
+    "PostgreSQL",
+    "Full Stack Developer",
+    "SR University",
+    "Tata Technologies InnoVent Finalist",
+    "VisionFame",
   ],
   authors: [{ name: "Sai Kumar Thota", url: siteUrl }],
   creator: "Sai Kumar Thota",
@@ -55,9 +53,9 @@ export const metadata: Metadata = {
     canonical: "/",
   },
   openGraph: {
-    title: "Sai Kumar Thota — Software Engineer",
+    title: "Sai Kumar Thota | Software Engineer | Python React Node.js",
     description:
-      "Software engineer building thoughtful web applications and practical AI-powered tools. Based in Hyderabad, India.",
+      "Sai Kumar Thota is a 2026 Computer Science graduate from SR University building software applications, REST APIs and practical AI systems using Python, React.js, Node.js, FastAPI and SQL.",
     url: siteUrl,
     siteName: "Sai Kumar Thota",
     locale: "en_IN",
@@ -73,9 +71,9 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Sai Kumar Thota — Software Engineer",
+    title: "Sai Kumar Thota | Software Engineer | Python React Node.js",
     description:
-      "Software engineer building thoughtful web applications and practical AI-powered tools. Based in Hyderabad, India.",
+      "Sai Kumar Thota is a 2026 Computer Science graduate from SR University building software applications, REST APIs and practical AI systems using Python, React.js, Node.js, FastAPI and SQL.",
     creator: "@SAIKUMAR039",
     images: ["/assets/developer-avatar.svg"],
   },
@@ -90,12 +88,6 @@ export const metadata: Metadata = {
       "max-snippet": -1,
     },
   },
-  other: {
-    "geo.region": "IN-TG",
-    "geo.placename": "Hyderabad",
-    "geo.position": "17.385044;78.486671",
-    ICBM: "17.385044, 78.486671",
-  },
 };
 
 const jsonLd = {
@@ -109,7 +101,7 @@ const jsonLd = {
       familyName: "Thota",
       jobTitle: "Software Engineer",
       description:
-        "Software engineer building thoughtful web applications and practical AI-powered tools.",
+        "Computer Science graduate from SR University building software applications, REST APIs and practical AI systems using Python, React.js, Node.js, FastAPI and SQL.",
       url: siteUrl,
       image: `${siteUrl}/assets/developer-avatar.svg`,
       sameAs: [
@@ -120,32 +112,66 @@ const jsonLd = {
         "@type": "CollegeOrUniversity",
         name: "SR University",
       },
-      knowsAbout: [
-        "Computer Science",
-        "Software Engineering",
-        "React",
-        "Next.js",
-        "TypeScript",
-        "Python",
-        "FastAPI",
-        "PostgreSQL",
-        "Machine Learning",
-        "Digital Marketing",
-      ],
-      address: {
-        "@type": "PostalAddress",
-        addressLocality: "Hyderabad",
-        addressRegion: "Telangana",
-        addressCountry: "IN",
+      worksFor: {
+        "@type": "Organization",
+        name: "VisionFame Pvt. Ltd.",
       },
+      knowsAbout: [
+        "Software Engineering",
+        "Python",
+        "React.js",
+        "Node.js",
+        "FastAPI",
+        "SQL",
+        "PostgreSQL",
+        "MySQL",
+        "REST APIs",
+        "Data Structures",
+        "Algorithms",
+        "Agile",
+      ],
+      hasCredential: [
+        {
+          "@type": "EducationalOccupationalCredential",
+          name: "AWS Academy Graduate — Cloud Architecting",
+          recognizedBy: {
+            "@type": "Organization",
+            name: "Amazon Web Services",
+          },
+        },
+        {
+          "@type": "EducationalOccupationalCredential",
+          name: "AWS Academy Graduate — Cloud Foundations",
+          recognizedBy: {
+            "@type": "Organization",
+            name: "Amazon Web Services",
+          },
+        },
+        {
+          "@type": "EducationalOccupationalCredential",
+          name: "Oracle Cloud Infrastructure (OCI) Administration — Certified",
+          recognizedBy: {
+            "@type": "Organization",
+            name: "Oracle",
+          },
+        },
+        {
+          "@type": "EducationalOccupationalCredential",
+          name: "ServiceNow Developer Virtual Internship",
+          recognizedBy: {
+            "@type": "Organization",
+            name: "ServiceNow & AICTE",
+          },
+        },
+      ],
     },
     {
       "@type": "WebSite",
       "@id": `${siteUrl}/#website`,
       url: siteUrl,
-      name: "Sai Kumar Thota — Software Engineer",
+      name: "Sai Kumar Thota | Software Engineer | Python React Node.js",
       description:
-        "Portfolio of Sai Kumar Thota, Software Engineer based in Hyderabad, India.",
+        "Sai Kumar Thota is a 2026 Computer Science graduate from SR University building software applications, REST APIs and practical AI systems using Python, React.js, Node.js, FastAPI and SQL.",
       publisher: {
         "@id": `${siteUrl}/#person`,
       },

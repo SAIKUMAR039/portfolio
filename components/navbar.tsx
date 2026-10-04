@@ -14,15 +14,15 @@ interface NavItem {
 
 export function Navbar(): React.ReactElement | null {
   const pathname = usePathname();
-  const isMarketingPage = pathname === "/marketing";
+  const isHome = pathname === "/";
   const [activeSection, setActiveSection] = useState<string>("");
   const [mounted, setMounted] = useState<boolean>(false);
 
   const navItems: NavItem[] = [
-    { id: "about", label: "About" },
     { id: "work", label: "Work" },
     { id: "skills", label: "Skills" },
     { id: "experience", label: "Experience" },
+    { id: "innovent", label: "Honors" },
     { id: "contact", label: "Contact" },
     { id: "marketing", label: "Marketing", isRoute: true, href: "/marketing" },
   ];
@@ -30,8 +30,14 @@ export function Navbar(): React.ReactElement | null {
   useEffect(() => {
     setMounted(true);
 
-    if (isMarketingPage) {
-      setActiveSection("marketing");
+    if (!isHome) {
+      if (pathname === "/marketing") {
+        setActiveSection("marketing");
+      } else if (pathname?.startsWith("/projects")) {
+        setActiveSection("work");
+      } else {
+        setActiveSection("");
+      }
       return;
     }
 
@@ -46,7 +52,7 @@ export function Navbar(): React.ReactElement | null {
       }
 
       // Check section offsets
-      const sectionIds = ["about", "work", "skills", "experience", "contact"];
+      const sectionIds = ["work", "skills", "experience", "innovent", "contact"];
       let currentSection = "";
 
       for (const id of sectionIds) {
@@ -73,7 +79,7 @@ export function Navbar(): React.ReactElement | null {
     handleScroll();
 
     return () => window.removeEventListener("scroll", handleScroll);
-  }, [isMarketingPage]);
+  }, [isHome, pathname]);
 
   const scrollToSection = (id: string) => {
     setActiveSection(id);
@@ -99,7 +105,7 @@ export function Navbar(): React.ReactElement | null {
     >
       <div className="flex items-center gap-1 sm:gap-1.5 p-1.5 rounded-full bg-zinc-950/85 backdrop-blur-2xl border border-white/[0.12] shadow-2xl shadow-black/80 ring-1 ring-white/[0.06]">
         {/* Brand: SAI */}
-        {isMarketingPage ? (
+        {!isHome ? (
           <Link
             href="/"
             className="relative px-3 sm:px-3.5 py-1.5 text-xs font-bold tracking-wider uppercase rounded-full text-white hover:text-zinc-200 transition-colors"
@@ -134,9 +140,7 @@ export function Navbar(): React.ReactElement | null {
         {/* Navigation Section Items */}
         <div className="flex items-center gap-1 overflow-x-auto no-scrollbar">
           {navItems.map((item) => {
-            const isActive = isMarketingPage
-              ? item.id === "marketing"
-              : activeSection === item.id;
+            const isActive = activeSection === item.id;
 
             // Route item (Marketing)
             if (item.isRoute) {
@@ -162,8 +166,8 @@ export function Navbar(): React.ReactElement | null {
               );
             }
 
-            // If we are on marketing page, anchor links must point to /#section
-            if (isMarketingPage) {
+            // If we are on subpage, anchor links must navigate to /#section
+            if (!isHome) {
               return (
                 <Link
                   key={item.id}

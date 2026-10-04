@@ -5,9 +5,9 @@ export const defaultPortfolioData: PortfolioData = {
   profile: {
     name: "Sai Kumar Thota",
     role: "Software Engineer",
-    exp: "Full Stack Developer Intern (9 months)",
-    superpower: "Web applications & applied AI tools",
-    status: "Available for software engineering roles",
+    exp: "Web Developer Intern (Jan 2025 – Sep 2025)",
+    superpower: "Web applications & practical AI systems",
+    status: "Open to software engineering roles",
     email: "saikumarthota2004@gmail.com",
     phone: "+91 90590 81173",
     location: "Hyderabad, India"
@@ -385,17 +385,17 @@ export const defaultPortfolioData: PortfolioData = {
       branch: "feat/internship",
       type: "feat",
       scope: "experience",
-      subject: "Full Stack Developer Internship at Codit Tech Solutions",
+      subject: "Web Developer Intern at VisionFame Pvt. Ltd.",
       author: "Sai Kumar Thota <saikumarthota2004@gmail.com>",
-      date: "May 2024 - January 2025 (9 months)",
+      date: "Jan 2025 – Sep 2025",
       ref: "HEAD -> main, origin/main",
       themeColor: "cyan",
       details: [
-        "Built and maintained web application features using React.js and Tailwind CSS.",
-        "Developed backend services and REST API endpoints using Python, FastAPI, and Node.js.",
-        "Handled request data validation, database queries, and response formatting for client applications.",
-        "Integrated external services and internal APIs to support key application workflows.",
-        "Focused on writing clean, reusable, and maintainable code in a collaborative Git-based workflow."
+        "Participated in the end-to-end software development lifecycle including design, development, testing, debugging and deployment for production-facing features.",
+        "Built and maintained backend APIs and frontend components using JavaScript, React.js and Node.js with structured relational data.",
+        "Investigated application issues, documented findings and proposed code-level improvements with senior developers.",
+        "Debugged application issues and verified fixes to improve reliability, responsiveness and maintainability.",
+        "Collaborated with cross-functional teams under Agile practices to deliver customer-focused development tasks."
       ]
     },
     {
@@ -403,61 +403,54 @@ export const defaultPortfolioData: PortfolioData = {
       branch: "feat/education",
       type: "feat",
       scope: "education",
-      subject: "B.Tech. in Computer Science & Engineering at SR University",
+      subject: "B.Tech in Computer Science and Engineering at SR University (CGPA: 7.2/10)",
       author: "Sai Kumar Thota <saikumarthota2004@gmail.com>",
-      date: "Nov 2022 - Present (Expected graduation: 2026)",
+      date: "2022 – 2026 (Graduation: June 2026)",
       ref: "origin/education",
       themeColor: "green",
       details: [
         "Solid foundation in core computer science disciplines: Data Structures, Algorithms, DBMS, Operating Systems, and OOPs.",
-        "Active contributor to campus developer events, hackathons, and technical workshops.",
-        "Built and deployed full-stack web projects and practical AI tools."
+        "CGPA: 7.2/10 across technical curriculum.",
+        "National Finalist in Tata Technologies InnoVent 2026."
       ]
     }
   ],
   projects: projects as any,
   achievements: [
     {
-      timestamp: "2024",
+      timestamp: "2026",
       service: "Tata Technologies InnoVent",
       status: "Verified",
-      message: "National Finalist — Tata Technologies InnoVent",
-      subtext: "Selected among top engineering teams nationwide for innovative product design and system engineering."
-    },
-    {
-      timestamp: "2024",
-      service: "Amazon Web Services",
-      status: "Verified",
-      message: "AWS Certified Solutions Architect – Associate",
-      subtext: "Certified expertise in designing secure, scalable, and resilient distributed applications on AWS."
+      message: "National Finalist — Tata Technologies InnoVent 2026",
+      subtext: "Selected in top teams nationwide for innovative engineering solutions and product design."
     },
     {
       timestamp: "2024",
       service: "Amazon Web Services",
       status: "Verified",
       message: "AWS Academy Graduate — Cloud Architecting",
-      subtext: "Specialized training in VPC network architecture, high availability, load balancing, and auto-scaling."
+      subtext: "Completed academy curriculum covering cloud architecture, VPC design, ELB, and auto-scaling."
     },
     {
       timestamp: "2024",
       service: "Amazon Web Services",
       status: "Verified",
       message: "AWS Academy Graduate — Cloud Foundations",
-      subtext: "Foundational mastery in core cloud computing infrastructure, security models, and cloud economics."
+      subtext: "Fundamental training in cloud infrastructure, services, security, pricing, and support models."
+    },
+    {
+      timestamp: "2024",
+      service: "Oracle",
+      status: "Verified",
+      message: "Oracle Cloud Infrastructure (OCI) Administration — Certified",
+      subtext: "Credential in OCI administration, cloud compute, storage, networking and security configuration."
     },
     {
       timestamp: "2024",
       service: "ServiceNow & AICTE",
       status: "Verified",
       message: "ServiceNow Developer Virtual Internship",
-      subtext: "AICTE and SmartBridge accredited program focusing on enterprise workflow automation and system administration."
-    },
-    {
-      timestamp: "2024",
-      service: "Oracle Cloud Infrastructure",
-      status: "Verified",
-      message: "Oracle Cloud Infrastructure Generative AI Certified Foundations",
-      subtext: "Validated proficiency in deploying large language models, prompt engineering, and retrieval-augmented architectures."
+      subtext: "AICTE & SmartBridge internship implementing workflows, scripting, and system admin tools."
     }
   ]
 };
